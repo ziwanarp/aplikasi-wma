@@ -1,0 +1,1 @@
+<footer class="footer" align="center"> © Copyright Aat Safa'at </footer>

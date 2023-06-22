@@ -1,0 +1,47 @@
+
+
+.slider_container_2{
+width:1130px;
+background-color:#000000;	
+}
+
+.SliderName_2 {
+	float: center;
+	width: 1000px;
+	height: 236px;
+    overflow:hidden;
+    margin:0;
+}
+
+.SliderNamePrev_2 {
+	background: url(../images/kiri.png) no-repeat left center;
+	width: 65px;
+	height: 236px;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-decoration: none;
+}
+.SliderNameNext_2 {
+	background:url(../images/kanan.png) no-repeat right center;
+	width: 65px;
+	height: 236px;
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-decoration: none;
+}
+
+
+.SliderName_2Description {
+	padding: 10px;
+	font-family: Tahoma,Arial,Helvetica;
+	font-size: 14px;
+	line-height: 30px;
+	letter-spacing: 1px;
+	text-align: center;
+	color: #ffffff;
+	text-shadow: 0 1px 3px #000000;
+}
