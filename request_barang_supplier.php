@@ -128,7 +128,7 @@ session_start();
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">Kelola Data Barang Produksi</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">Kelola Request Barang</h3>
 
                     </div>
                     <div class="col-md-7 col-4 align-self-center">
@@ -145,15 +145,6 @@ session_start();
                     <!-- column -->
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-block">
-                                <div class="form-group">
-                                    <?php if ($_SESSION['hak_akses'] !== 'supplier') { ?>
-                                        <a href="data_barang_produksi_input.php" class="btn waves-effect waves-light btn-primary">Tambah data</a>
-                                    <?php } else { ?>
-                                        <a href="data_barang_produksi_input_supplier.php" class="btn waves-effect waves-light btn-primary">Tambah data</a>
-                                    <?php } ?>
-                                </div>
-                            </div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -172,7 +163,7 @@ session_start();
                                     <?php
                                     include "kns.php";
                                     $no = 1;
-                                    $t = mysqli_query($kns, "SELECT * FROM tb_barang WHERE status_pesanan NOT IN(0,2)");
+                                    $t = mysqli_query($kns, "SELECT * FROM tb_barang WHERE id_supplier = '" . $_SESSION['id_supplier'] . "' AND status_pesanan IN(0,1,2)");
                                     while ($y = mysqli_fetch_array($t)) {
                                         $idus = $y['id_supplier'];
                                         $idbar = $y['id_barang'];
@@ -191,10 +182,23 @@ session_start();
                                                     <td>Rp. " . number_format($y['harga']) . "</td>
                                                     <td>$y[jumlah]</td>
                                                     <td>$nmas</td>
-                                                    <td>
-                                                        <a class=\"btn btn-sm btn-info\"href=edit_barang.php?id=$y[id_barang]><span class=\"glyphicon glyphicon-pencil\"></span> Edit</a>
-                                                        <a onclick=\"return confirm('Hapus data ?');\" class=\"btn btn-sm btn-danger\" href=hapus_barang.php?id=$y[id_barang] onClick='return confirm(\"Anda yakin menghapus data ini?\")';><span class=\"glyphicon glyphicon-remove\"></span> Hapus</a>
-                                                    </td>
+                                                    <td>";
+                                        switch ($y['status_pesanan']) {
+                                            case 2:
+                                                echo "
+                                                            <a onclick=\"return confirm('ACCEPT pembelian ?');\" class=\"btn btn-sm btn-success\" href=update_status_supplier.php?id_barang=$y[id_barang]&status=1> ACCEPT</a>
+                                                            <a onclick=\"return confirm('REJECT pembelian ?');\" class=\"btn btn-sm btn-danger\" href=update_status_supplier.php?id_barang=$y[id_barang]&status=0> REJECT</a>";
+                                                break;
+                                            case 0:
+                                                echo "<a class=\"btn btn-sm btn-danger\"href=#>REJECTED</a>";
+                                                break;
+                                            case 1:
+                                                echo "<a class=\"btn btn-sm btn-success\"href=#>ACCEPTED</a>";
+                                                break;
+                                            default:
+                                                echo "<a class=\"btn btn-sm btn-secondary\"href=#>STATUS NOT VALID</a>";
+                                        }
+                                        echo " </td>
                                                 </tr>";
                                         $no++;
                                     }

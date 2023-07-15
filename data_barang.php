@@ -160,19 +160,19 @@ session_start();
                                             <th>Kode Barang</th>
                                             <th>Stok</th>
                                             <th>Harga</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <?php
                                     include "kns.php";
                                     $no = 1;
-                                    $t = mysqli_query($kns, "select * from tb_barang");
+                                    $t = mysqli_query($kns, "select * from tb_barang WHERE status_pesanan NOT IN(0,2)");
                                     while ($y = mysqli_fetch_array($t)) {
                                         $idus = $y['id_supplier'];
                                         $idbar = $y['id_barang'];
                                         $ck = mysqli_query($kns, "SELECT * FROM tb_supplier where id_supplier = '$idus' ");
                                         $cck = mysqli_fetch_array($ck);
-                                        
+
                                         $ck2 = mysqli_query($kns, "SELECT * FROM tb_stok where id_barang = '$idbar' ");
                                         $cck2 = mysqli_fetch_array($ck2);
                                         $stok = $cck2['stok_sekarang'];
@@ -185,7 +185,7 @@ session_start();
                                                     
 
                                                 </tr>";
-                                                $no++;
+                                        $no++;
                                     }
                                     ?>
                                 </table>

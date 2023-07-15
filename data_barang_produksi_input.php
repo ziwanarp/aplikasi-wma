@@ -9,10 +9,10 @@ include "kns.php";
 
 extract($_GET);
 if (isset($save)) {
-    
 
-    $id_barang = $kode_barang.'_'.rand(1000,9999);
-    $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,harga,isi,banyaknya,jumlah,id_supplier) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$harga','$isi','$banyaknya','$jumlah','$supplier')");
+
+    $id_barang = $kode_barang . '_' . rand(1000, 9999);
+    $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,harga,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$harga','$isi','$banyaknya','$jumlah','$supplier','9')");
     if ($smp) {
         mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
 
@@ -173,10 +173,10 @@ if (isset($save)) {
                                         <label class="col-md-4">Kode Barang</label>
                                         <div class="col-md-3">
                                             <select name="kode_barang" class="form-control">
-                                                    <option value="BSB">BSB</option>
-                                                    <option value="BSA">BSA</option>
-                                                    <option value="BS">BS</option>
-                                                    <option value="BM">BM</option>
+                                                <option value="BSB">BSB</option>
+                                                <option value="BSA">BSA</option>
+                                                <option value="BS">BS</option>
+                                                <option value="BM">BM</option>
                                             </select>
                                         </div>
                                     </div>

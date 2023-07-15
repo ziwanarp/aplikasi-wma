@@ -1,5 +1,26 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
+$tgl = date('d-m-Y h:i:s');
+$tgl2 = date('Y-m-d');
+$bataswaktu = date('d-m-Y h:i:s', strtotime('+3 month', strtotime($tgl)));
 session_start();
+include "kns.php";
+
+
+extract($_GET);
+if (isset($save)) {
+
+
+    $id_barang = $kode_barang . '_' . rand(1000, 9999);
+    $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,harga,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$harga','$isi','$banyaknya','$jumlah','$supplier','9')");
+    if ($smp) {
+        mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
+
+        echo "<script>alert('Berhasil Disimpan'); location.href='data_barang.php';</script>";
+    } else {
+        echo "<script>alert('Data Barang sudah ada, coba masukkan barang yang lain'); location.href='data_barang_produksi.php';</script>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +34,7 @@ session_start();
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon1.png">
-    <title>UD. RAJABAWANG</title>
+    <title>UD. Rajabawang</title>
     <!-- Bootstrap Core CSS -->
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- chartist CSS -->
@@ -84,7 +105,7 @@ session_start();
                         <!-- ============================================================== -->
 
                         <h4 class="text-white card-title align-self-center col-md-12 col-12">SISTEM INFORMASI PERAMALAN PERSEDIAAN
-                            UD. RAJABAWANG</h4>
+                            UD.RAJABAWANG </h4>
 
                         </li>
                     </ul>
@@ -128,8 +149,7 @@ session_start();
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">Kelola Data Barang Produksi</h3>
-
+                        <h3 class="text-themecolor m-b-0 m-t-0">Tambah Data Barang</h3>
                     </div>
                     <div class="col-md-7 col-4 align-self-center">
                         <a href="logout.php" class="btn waves-effect waves-light btn-danger pull-right">Logout</a>
@@ -141,90 +161,109 @@ session_start();
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                <!-- Row -->
                 <div class="row">
-                    <!-- column -->
-                    <div class="col-lg-12">
+
+                    <!-- Column -->
+                    <div class="col-lg-12 col-xlg-9 col-md-7">
                         <div class="card">
                             <div class="card-block">
-                                <div class="form-group">
-                                    <?php if ($_SESSION['hak_akses'] !== 'supplier') { ?>
-                                        <a href="data_barang_produksi_input.php" class="btn waves-effect waves-light btn-primary">Tambah data</a>
-                                    <?php } else { ?>
-                                        <a href="data_barang_produksi_input_supplier.php" class="btn waves-effect waves-light btn-primary">Tambah data</a>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Id Barang</th>
-                                            <th>Tanggal</th>
-                                            <th>Kode Barang</th>
-                                            <th>Nama Barang</th>
-                                            <th>Harga</th>
-                                            <th>Jumlah</th>
-                                            <th>Supplier</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <?php
-                                    include "kns.php";
-                                    $no = 1;
-                                    $t = mysqli_query($kns, "SELECT * FROM tb_barang WHERE status_pesanan NOT IN(0,2)");
-                                    while ($y = mysqli_fetch_array($t)) {
-                                        $idus = $y['id_supplier'];
-                                        $idbar = $y['id_barang'];
-                                        $ck = mysqli_query($kns, "SELECT * FROM tb_supplier where id_supplier = '$idus' ");
-                                        $cck = mysqli_fetch_array($ck);
-                                        $nmas = $cck['nama_supplier'];
-                                        $ck2 = mysqli_query($kns, "SELECT * FROM tb_stok where id_barang = '$idbar' ");
-                                        $cck2 = mysqli_fetch_array($ck2);
-                                        $stok = $cck2['stok_sekarang'];
-                                        echo "<tr>
-                                                    <td>$no</td>
-                                                    <td>$y[id_barang]</td>
-                                                    <td>$y[tgl]</td>
-                                                    <td>$y[kode_barang]</td>
-                                                    <td>$y[nama_barang]</td>
-                                                    <td>Rp. " . number_format($y['harga']) . "</td>
-                                                    <td>$y[jumlah]</td>
-                                                    <td>$nmas</td>
-                                                    <td>
-                                                        <a class=\"btn btn-sm btn-info\"href=edit_barang.php?id=$y[id_barang]><span class=\"glyphicon glyphicon-pencil\"></span> Edit</a>
-                                                        <a onclick=\"return confirm('Hapus data ?');\" class=\"btn btn-sm btn-danger\" href=hapus_barang.php?id=$y[id_barang] onClick='return confirm(\"Anda yakin menghapus data ini?\")';><span class=\"glyphicon glyphicon-remove\"></span> Hapus</a>
-                                                    </td>
-                                                </tr>";
-                                        $no++;
-                                    }
-                                    ?>
-                                </table>
+                                <form class="form-horizontal form-material">
+                                    <div class="form-group">
+                                        <label class="col-md-4">Kode Barang</label>
+                                        <div class="col-md-3">
+                                            <select name="kode_barang" class="form-control">
+                                                <option value="BSB">BSB</option>
+                                                <option value="BSA">BSA</option>
+                                                <option value="BS">BS</option>
+                                                <option value="BM">BM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Tanggal</label>
+                                        <div class="col-md-3">
+                                            <input type="date" class="form-control form-control-line" name="tanggal" required="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Supplier</label>
+                                        <div class="col-md-3">
+                                            <select name="supplier" class="form-control" required>
+                                                <option value="<?php echo $_SESSION['id_supplier'] ?>"><?php echo $_SESSION['name']; ?></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Nama Barang</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-line" name="nama" required="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Satuan</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control form-control-line" name="satuan" required="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Isi</label>
+                                        <div class="col-md-3">
+                                            <input type="number" step="0.01" class="form-control form-control-line" id="isi" name="isi" required="" onkeyup='check()'>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Banyaknya</label>
+                                        <div class="col-md-3">
+                                            <input type="number" class="form-control form-control-line" id="banyaknya" name="banyaknya" required="" onkeyup='check()'>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Jumlah</label>
+                                        <div class="col-md-3">
+                                            <input type="number" class="form-control form-control-line" id="jumlah" name="jumlah" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Harga (Rp.)</label>
+                                        <div class="col-md-3">
+                                            <input type="number" class="form-control form-control-line" name="harga" required="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-primary" name="save">Simpan</button>
+                                            <a href="data_barang_produksi.php" class="btn btn-success">batal</a>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                    <!-- Column -->
                 </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
-            <!-- End PAge Content -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                @Copyright Efan Febriana 2023
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- End Container fluid  -->
+        <!-- End Page wrapper  -->
         <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <footer class="footer" align="center">
-            © Copyright Efan Febriana 2023
-        </footer>
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Page wrapper  -->
-    <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
@@ -232,6 +271,13 @@ session_start();
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+    <script>
+        var check = function() {
+            var isi = document.getElementById('isi').value
+            var banyaknya = document.getElementById('banyaknya').value;
+            document.getElementById('jumlah').value = isi * banyaknya;
+        }
+    </script>
     <script src="assets/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="assets/plugins/bootstrap/js/tether.min.js"></script>

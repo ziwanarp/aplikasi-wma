@@ -4,8 +4,8 @@ session_start();
 include "kns.php";
 $koneksi = $kns;
 
-$querysum = "SELECT SUM(jml_penjualan) FROM tb_penjualan";
-$querytampil = "SELECT SUM(jml_penjualan), SUBSTR(tgl_penjualan, 6, 2) AS bulan, SUBSTR(tgl_penjualan, 1, 4) AS tahun FROM tb_penjualan GROUP BY bulan , tahun ORDER BY tahun, bulan;";
+$querysum = "SELECT SUM(jumlah) FROM tb_barang";
+$querytampil = "SELECT SUM(jumlah), SUBSTR(tgl, 6, 2) AS bulan, SUBSTR(tgl, 1, 4) AS tahun FROM tb_barang GROUP BY bulan , tahun ORDER BY tahun, bulan;";
 
 
 
@@ -138,7 +138,7 @@ $n_alpha;
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">Perhitungan Peramalan Penjualan</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">Perhitungan Peramalan Produksi</h3>
                     </div>
                     <div class="col-md-7 col-4 align-self-center">
                         <a href="logout.php" class="btn waves-effect waves-light btn-danger pull-right">Logout</a>
@@ -202,6 +202,8 @@ $n_alpha;
 
 
                                         while ($row = mysqli_fetch_row($resultquery)) {
+
+
                                             // masukan 3 data pertama ke dalam array
                                             if ($data1 == 0) {
                                                 $data1 = $row[0];
