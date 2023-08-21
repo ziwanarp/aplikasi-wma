@@ -10,13 +10,16 @@ include "kns.php";
 extract($_GET);
 if (isset($save)) {
 
-
-    $id_barang = $kode_barang . '_' . rand(1000, 9999);
+    if ($harga <= 25000) {
+        $id_barang = $kode_barang . '_UN25/' . rand(100, 999);
+    } else {
+        $id_barang = $kode_barang . '_UP25/' . rand(100, 999);
+    }
     $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,harga,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$harga','$isi','$banyaknya','$jumlah','$supplier','9')");
     if ($smp) {
         mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
 
-        echo "<script>alert('Berhasil Disimpan'); location.href='data_barang.php';</script>";
+        echo "<script>alert('Berhasil Disimpan'); location.href='data_barang_produksi.php';</script>";
     } else {
         echo "<script>alert('Data Barang sudah ada, coba masukkan barang yang lain'); location.href='data_barang_produksi.php';</script>";
     }

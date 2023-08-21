@@ -152,6 +152,7 @@ session_start();
                                 <a class="btn btn-success" href="laporan.php">Laporan Penjualan</a>
                                 <a class="btn btn-warning" href="laporan_data_barang_produksi.php">Laporan Data Produksi</a>
                                 <a class="btn btn-danger" href="laporan_peramalan.php">Laporan Peramalan</a>
+                                <a class="btn btn-info" href="laporan_data_barang_masuk.php">Laporan Barang Masuk</a>
                             </div>
                         </div>
 

@@ -1,15 +1,12 @@
 <?php
 session_start();
-
 include "kns.php";
-$koneksi = $kns;
 
-$querysum = "SELECT SUM(jml_penjualan) FROM tb_penjualan";
-$querytampil = "SELECT SUM(jml_penjualan), SUBSTR(tgl_penjualan, 6, 2) AS bulan, SUBSTR(tgl_penjualan, 1, 4) AS tahun FROM tb_penjualan GROUP BY bulan , tahun ORDER BY tahun, bulan;";
+$querytampil = "SELECT kode_barang, SUM(jumlah) as jumlah, SUBSTR(tgl, 6, 2) AS bulan, SUBSTR(tgl, 1, 4) AS tahun FROM tb_barang GROUP BY kode_barang,bulan , tahun ORDER BY tahun, bulan,kode_barang";
 
+$resultquery = mysqli_query($kns, $querytampil);
+$no = 1;
 
-
-$n_alpha;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +19,7 @@ $n_alpha;
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon1.png">
-    <title>Laporan Data Peramlan</title>
+    <title>Laporan Barang Masuk Perbulan</title>
     <!-- Bootstrap Core CSS -->
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- chartist CSS -->
@@ -33,9 +30,9 @@ $n_alpha;
     <link href="assets/plugins/c3-master/c3.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/blue.css" id="theme" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <script src="assets/plugins/jquery/jquery.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -140,7 +137,7 @@ $n_alpha;
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor">Laporan Data Peramlan</h3>
+                        <h3 class="text-themecolor">Laporan Barang Masuk</h3>
                         <br>
 
 
@@ -173,198 +170,29 @@ $n_alpha;
                         <div class="card">
                             <div class="card-block">
                                 <center>
-                                    <h3><b>Laporan Data Peramalan</b> </h3>
+                                    <h3><b>Laporan Barang Masuk</b> </h3>
                                 </center>
                                 <br>
+
                                 <table id="example" class="table table-striped" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Bulan/Tahun</th>
-                                            <th>Data Aktual</th>
-                                            <th>Data Perkiraan</th>
-                                            <th>Error</th>
-                                            <th>MAD</th>
-                                            <th>MSE</th>
-                                            <th>MAPE</th>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Bulan / Tahun</th>
+                                            <th scope="col">Kode Barang</th>
+                                            <th scope="col">Total Penjualan</th>
                                         </tr>
                                     </thead>
-
-
-
                                     <tbody>
-                                        <?php
-                                        //untuk menentukan nilai peramalan pertama
-                                        $resultquery = mysqli_query($koneksi, $querysum);
-                                        $hasilsum = mysqli_fetch_row($resultquery);
-
-                                        $resultquery = mysqli_query($koneksi, $querytampil);
-
-                                        $d_perkiraan = "";
-                                        $count = mysqli_num_rows($resultquery);
-                                        $loop = 0;
-                                        $sum_abs_err = 0;
-                                        $sum_abs_err2 = 0;
-                                        $sum_abs_err_percent = 0;
-                                        $hitung = 0;
-                                        $data1 = 0;
-                                        $data2 = 0;
-                                        $data3 = 0;
-                                        $n_alpha = 2 / ($count + 1);
-
-
-                                        while ($row = mysqli_fetch_row($resultquery)) {
-                                            // masukan 3 data pertama ke dalam array
-                                            if ($data1 == 0) {
-                                                $data1 = $row[0];
-
-                                                if ($data2 != 0 && $data3 != 0) {
-                                                    $d3 = $data3 * 2;
-                                                    $d2 = $data2;
-                                                    $d1 = $data1 * 3;
-
-                                                    $perkiraan_bulan = ($d1 + $d2 + $d3) / 6;
-
-                                                    $data2 = 0;
-                                                }
-                                            } else if ($data2 == 0) {
-                                                $data2 = $row[0];
-
-                                                if ($data1 != 0 && $data3 != 0) {
-                                                    $d3 = $data3;
-                                                    $d2 = $data2 * 3;
-                                                    $d1 = $data1 * 2;
-
-                                                    $perkiraan_bulan = ($d1 + $d2 + $d3) / 6;
-
-                                                    $data3 = 0;
-                                                }
-                                            } else if ($data3 == 0) {
-                                                $data3 = $row[0];
-
-                                                $d3 = $data3 * 3;
-                                                $d2 = $data2 * 2;
-                                                $d1 = $data1;
-
-                                                $perkiraan_bulan = ($d1 + $d2 + $d3) / 6;
-
-                                                $data1 = 0;
-                                            }
-
-                                            //inisiasi data perkiraan pertama
-                                            if ($d_perkiraan === "") {
-                                                $d_perkiraan = $hasilsum[0] / $count;
-                                            } else {
-                                                $d_perkiraan = $h_perkiraan;
-                                            }
-
-                                            $array_perkiraan[] = $d_perkiraan;
-
-                                            //rumus error
-                                            $error = $row[0] - $d_perkiraan;
-
-
-                                            //rumus absolute error
-                                            $abs_err = abs($error);
-                                            $sum_abs_err = $sum_abs_err + $abs_err;
-
-                                            //rumus absolute error pangkat 2
-                                            $abs_err2 = pow($error, 2);
-                                            $sum_abs_err2 = $sum_abs_err2 + $abs_err2;
-
-                                            //rumus absolute error %
-                                            $abs_err_percent = abs((($row[0] - $d_perkiraan) / $row[0]) * 100);
-                                            $sum_abs_err_percent = $sum_abs_err_percent + $abs_err_percent;
-
-                                            if ($row[1] == '01') {
-                                                $row[1] = "Januari";
-                                            } else if ($row[1] == '02') {
-                                                $row[1] = "Pebruari";
-                                            } else if ($row[1] == '03') {
-                                                $row[1] = "Maret";
-                                            } else if ($row[1] == '04') {
-                                                $row[1] = "April";
-                                            } else if ($row[1] == '05') {
-                                                $row[1] = "Mei";
-                                            } else if ($row[1] == '06') {
-                                                $row[1] = "Juni";
-                                            } else if ($row[1] == '07') {
-                                                $row[1] = "Juli";
-                                            } else if ($row[1] == '08') {
-                                                $row[1] = "Agustus";
-                                            } else if ($row[1] == '09') {
-                                                $row[1] = "September";
-                                            } else if ($row[1] == '10') {
-                                                $row[1] = "Oktober";
-                                            } else if ($row[1] == '11') {
-                                                $row[1] = "November";
-                                            } else if ($row[1] == '12') {
-                                                $row[1] = "Desember";
-                                            } else {
-                                                echo "Bulan Tidak Ada";
-                                            }
-
-                                            echo "<tr>";
-                                            $no = $loop + 1;
-                                            echo "<td>" . $no . "</td>
-								<td>" . $row[1] . " " . $row[2] . "</td>
-								<td>" . number_format($row[0]) . "</td>";
-
-                                            if ($hitung < 3) {
-                                                echo "<td>-</td>";
-                                                echo "<td>-</td>";
-                                                echo "<td>-</td>";
-                                                echo "<td>-</td>";
-                                                echo "<td>-</td>";
-                                            } else {
-                                                echo "<td>" . number_format(round($perkiraan_bulan_next)) . "</td>
-									<td>" . number_format(round($error_next)) . "</td>
-									<td>" . number_format(round($abs_err_next)) . "</td>
-									<td>" . number_format(round($abs_err_next2)) . "</td>
-									<td>" . number_format(round($abs_err_percent_next)) . "%</td>";
-                                            }
-                                            echo "</tr>";
-
-                                            if (isset($perkiraan_bulan)) {
-                                                $perkiraan_bulan_next = $perkiraan_bulan;
-                                            }
-                                            if (isset($error)) {
-                                                $error_next = $error;
-                                            }
-                                            if (isset($abs_err)) {
-                                                $abs_err_next = $abs_err;
-                                            }
-                                            if (isset($abs_err2)) {
-                                                $abs_err_next2 = $abs_err;
-                                            }
-                                            if (isset($abs_err_percent)) {
-                                                $abs_err_percent_next = $abs_err_percent;
-                                            }
-
-
-                                            //rumus single exponential smoothing
-                                            $h_perkiraan = $d_perkiraan + $n_alpha * ($row[0] - $d_perkiraan);
-
-                                            //jika data sudah ditampilkan semua, lakukan peramalan untuk bulan berikutnya
-                                            $hitung += 1;
-                                            $loop = $loop + 1;
-                                            if ($loop == $count) {
-                                                echo "</div>";
-                                                $d_aktual_next = $row[0];
-                                                $d_perkiraan_next = $d_perkiraan;
-                                                $d_ft = $d_perkiraan_next + $n_alpha * ($d_aktual_next - $d_perkiraan_next);
-
-                                                //rumus MAPE
-                                                $rata_abs_error_percent = $sum_abs_err_percent / $count;
-
-                                                //rumus rata2 abs_err MAD
-                                                $rataabs_err = $sum_abs_err / $count;
-
-                                                //rumus rata2 abs_err2 MSD
-                                                $rataabs_err2 = $sum_abs_err2 / $count;
-                                            }
-                                        }
-                                        ?>
+                                        <?php while ($row = mysqli_fetch_row($resultquery)) { ?>
+                                            <tr>
+                                                <th scope="row"><?= $no ?></th>
+                                                <td><?= $row[2] . "/" . $row[3] ?></td>
+                                                <td><?= $row[0] ?></td>
+                                                <td><?= $row[1] ?></td>
+                                            </tr>
+                                        <?php $no += 1;
+                                        } ?>
                                     </tbody>
                                 </table>
 
