@@ -172,9 +172,9 @@ $n_alpha;
                                             <th>Data Aktual</th>
                                             <th>Data Perkiraan</th>
                                             <th>Error</th>
-                                            <th>MAD</th>
-                                            <th>MSE</th>
-                                            <th>MAPE</th>
+                                            <th>MAD <small>(Rata - rata penyimpangan absolut)</small></th>
+                                            <th>MSE <small> (Rata - rata kuadrat kesalahan) </small></th>
+                                            <th>MAPE <small>(Rata-rata persentase kesalahan)</small></th>
                                         </tr>
                                     </thead>
 
