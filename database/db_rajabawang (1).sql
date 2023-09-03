@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Jun 2023 pada 00.28
+-- Waktu pembuatan: 03 Sep 2023 pada 19.38
 -- Versi server: 10.4.20-MariaDB
 -- Versi PHP: 8.0.8
 
@@ -56,17 +56,28 @@ CREATE TABLE `tb_barang` (
   `isi` float NOT NULL,
   `banyaknya` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
-  `id_supplier` int(5) NOT NULL
+  `id_supplier` int(5) NOT NULL,
+  `status_pesanan` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_barang`
 --
 
-INSERT INTO `tb_barang` (`id_barang`, `kode_barang`, `tgl`, `nama_barang`, `satuan`, `harga`, `isi`, `banyaknya`, `jumlah`, `id_supplier`) VALUES
-('BSA_2083', 'BSA', '2023-06-19', 'BSA', 'kilo', 5000, 100, 5, 500, 6),
-('BSB_4325', 'BSB', '2023-06-17', 'Cendol', 'pcs', 5000, 2, 2, 4, 6),
-('BSB_6220', 'BSB', '2023-06-17', 'tahu', 'bungkus', 3000, 5, 5, 25, 7);
+INSERT INTO `tb_barang` (`id_barang`, `kode_barang`, `tgl`, `nama_barang`, `satuan`, `harga`, `isi`, `banyaknya`, `jumlah`, `id_supplier`, `status_pesanan`) VALUES
+('BSA_2083', 'BSA', '2023-06-19', 'BSA', 'kilo', 5000, 100, 5, 500, 6, 9),
+('BSA_5895', 'BSA', '2023-07-14', 'BSA', 'pcs', 1000, 4, 4, 16, 6, 9),
+('BSA_7105', 'BSA', '2023-07-14', 'BSa', '2', 1000, 2, 2, 4, 6, 9),
+('BSA_7213', 'BSA', '2023-08-21', 'Herman su', 'pcs', 10000, 2, 2, 4, 17, 9),
+('BSA_8599', 'BSA', '2023-07-14', 'BSA', 'pcs', 1000, 3, 3, 9, 6, 9),
+('BSA_8648', 'BSA', '2023-07-15', 'BSA', 'pcs', 10000, 5, 5, 25, 17, 1),
+('BSA_8752', 'BSA', '2023-07-14', 'BSA', 'pcs', 1000, 5, 5, 25, 6, 9),
+('BSB_1541', 'BSB', '2023-08-21', 'Herman ', 'kilo', 10000, 2, 2, 4, 17, 9),
+('BSB_4325', 'BSB', '2023-06-17', 'Cendol', 'pcs', 5000, 2, 2, 4, 6, 9),
+('BSB_6220', 'BSB', '2023-06-17', 'tahu', 'bungkus', 3000, 5, 5, 25, 7, 9),
+('BSB_7209', 'BSB', '2023-08-21', 'BSB', 'bks', 20000, 3, 3, 9, 17, 9),
+('BSB_UN25/525', 'BSB', '2023-08-21', 'BSA', 'kg', 20000, 3, 5, 15, 17, 9),
+('BSB_UP25/702', 'BSB', '2023-08-21', 'Cendol', 'kilo', 30000, 4, 4, 16, 17, 9);
 
 -- --------------------------------------------------------
 
@@ -197,7 +208,8 @@ INSERT INTO `tb_penjualan` (`id_penjualan`, `tgl_penjualan`, `nama_pembeli`, `id
 (57, '2023-06-19', 'xipuntang', 'BSA_2083', 'BSA', 2, 2, 4, 7000, 9),
 (58, '2023-06-19', 'customer', 'BSA_2083', 'BSA', 2, 2, 4, 1000, 0),
 (59, '2023-06-19', 'customer', 'BSB_6220', 'BSB', 2, 2, 4, 2000, 1),
-(60, '2023-06-20', 'customer', 'BSB_4325', 'BSB', 2, 3, 6, 10000, 0);
+(60, '2023-06-20', 'customer', 'BSB_4325', 'BSB', 2, 3, 6, 10000, 0),
+(61, '2023-07-15', 'customer', 'BSA_8599', 'BSA', 5, 5, 25, 10000, 0);
 
 -- --------------------------------------------------------
 
@@ -227,7 +239,8 @@ INSERT INTO `tb_persediaan` (`id_persediaan`, `tgl_persediaan`, `id_barang`, `id
 (53, '2023-06-19', 'BSA_2083', 20, 4, 475),
 (54, '2023-06-19', 'BSA_2083', 20, 4, 471),
 (55, '2023-06-19', 'BSB_6220', 19, 4, 15),
-(56, '2023-06-20', 'BSB_4325', 18, 6, -1);
+(56, '2023-06-20', 'BSB_4325', 18, 6, -1),
+(57, '2023-07-15', 'BSA_8599', 22, 25, 9);
 
 -- --------------------------------------------------------
 
@@ -243,6 +256,30 @@ CREATE TABLE `tb_pesanan` (
   `id_barang` varchar(20) NOT NULL,
   `id_stok` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_produksi`
+--
+
+CREATE TABLE `tb_produksi` (
+  `id` int(20) NOT NULL,
+  `tgl_produksi` date NOT NULL,
+  `id_barang` varchar(20) NOT NULL,
+  `kode_barang` varchar(255) NOT NULL,
+  `nama_barang` varchar(255) NOT NULL,
+  `isi` float NOT NULL,
+  `banyaknya` int(11) NOT NULL,
+  `jumlah` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_produksi`
+--
+
+INSERT INTO `tb_produksi` (`id`, `tgl_produksi`, `id_barang`, `kode_barang`, `nama_barang`, `isi`, `banyaknya`, `jumlah`) VALUES
+(2, '2023-09-04', 'BSB_7209', 'PRD_7209', 'Kriminal', 2, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -263,7 +300,17 @@ CREATE TABLE `tb_stok` (
 INSERT INTO `tb_stok` (`id_stok`, `stok_sekarang`, `id_barang`) VALUES
 (18, -7, 'BSB_4325'),
 (19, 11, 'BSB_6220'),
-(20, 467, 'BSA_2083');
+(20, 467, 'BSA_2083'),
+(21, 4, 'BSA_7105'),
+(22, -16, 'BSA_8599'),
+(23, 25, 'BSA_8752'),
+(24, 16, 'BSA_5895'),
+(25, 25, 'BSA_8648'),
+(26, 4, 'BSB_1541'),
+(27, 4, 'BSA_7213'),
+(28, 9, 'BSB_7209'),
+(29, 15, 'BSB_UN25/525'),
+(30, 16, 'BSB_UP25/702');
 
 -- --------------------------------------------------------
 
@@ -402,6 +449,12 @@ ALTER TABLE `tb_pesanan`
   ADD KEY `id_stok` (`id_stok`);
 
 --
+-- Indeks untuk tabel `tb_produksi`
+--
+ALTER TABLE `tb_produksi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `tb_stok`
 --
 ALTER TABLE `tb_stok`
@@ -465,13 +518,13 @@ ALTER TABLE `tb_penawaran`
 -- AUTO_INCREMENT untuk tabel `tb_penjualan`
 --
 ALTER TABLE `tb_penjualan`
-  MODIFY `id_penjualan` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id_penjualan` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_persediaan`
 --
 ALTER TABLE `tb_persediaan`
-  MODIFY `id_persediaan` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id_persediaan` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_pesanan`
@@ -480,10 +533,16 @@ ALTER TABLE `tb_pesanan`
   MODIFY `id_pesanan` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT untuk tabel `tb_produksi`
+--
+ALTER TABLE `tb_produksi`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT untuk tabel `tb_stok`
 --
 ALTER TABLE `tb_stok`
-  MODIFY `id_stok` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_stok` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_supplier`
