@@ -159,41 +159,29 @@ session_start();
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Id Barang</th>
-                                            <th>Tanggal</th>
                                             <th>Kode Barang</th>
+                                            <th>Tanggal Produksi</th>
                                             <th>Nama Barang</th>
-                                            <th>Harga</th>
                                             <th>Jumlah</th>
-                                            <th>Supplier</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <?php
                                     include "kns.php";
                                     $no = 1;
-                                    $t = mysqli_query($kns, "SELECT * FROM tb_barang WHERE status_pesanan NOT IN(0,2)");
+                                    $t = mysqli_query($kns, "SELECT * FROM tb_produksi");
+
+
                                     while ($y = mysqli_fetch_array($t)) {
-                                        $idus = $y['id_supplier'];
-                                        $idbar = $y['id_barang'];
-                                        $ck = mysqli_query($kns, "SELECT * FROM tb_supplier where id_supplier = '$idus' ");
-                                        $cck = mysqli_fetch_array($ck);
-                                        $nmas = $cck['nama_supplier'];
-                                        $ck2 = mysqli_query($kns, "SELECT * FROM tb_stok where id_barang = '$idbar' ");
-                                        $cck2 = mysqli_fetch_array($ck2);
-                                        $stok = $cck2['stok_sekarang'];
                                         echo "<tr>
                                                     <td>$no</td>
-                                                    <td>$y[id_barang]</td>
-                                                    <td>$y[tgl]</td>
                                                     <td>$y[kode_barang]</td>
+                                                    <td>$y[tgl_produksi]</td>
                                                     <td>$y[nama_barang]</td>
-                                                    <td>Rp. " . number_format($y['harga']) . "</td>
                                                     <td>$y[jumlah]</td>
-                                                    <td>$nmas</td>
                                                     <td>
-                                                        <a class=\"btn btn-sm btn-info\"href=edit_barang.php?id=$y[id_barang]><span class=\"glyphicon glyphicon-pencil\"></span> Edit</a>
-                                                        <a onclick=\"return confirm('Hapus data ?');\" class=\"btn btn-sm btn-danger\" href=hapus_barang.php?id=$y[id_barang] onClick='return confirm(\"Anda yakin menghapus data ini?\")';><span class=\"glyphicon glyphicon-remove\"></span> Hapus</a>
+                                                        <a class=\"btn btn-sm btn-info\"href=edit_barang.php?id=$y[id]><span class=\"glyphicon glyphicon-pencil\"></span> Edit</a>
+                                                        <a onclick=\"return confirm('Hapus data ?');\" class=\"btn btn-sm btn-danger\" href=hapus_barang.php?id=$y[id] onClick='return confirm(\"Anda yakin menghapus data ini?\")';><span class=\"glyphicon glyphicon-remove\"></span> Hapus</a>
                                                     </td>
                                                 </tr>";
                                         $no++;

@@ -168,31 +168,19 @@ session_start();
                                             <th>Kode</th>
                                             <th>Tanggal</th>
                                             <th>Nama Barang</th>
-                                            <th>Harga</th>
                                             <th>Jumlah</th>
-                                            <th>Supplier</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         include "kns.php";
-                                        $t = mysqli_query($kns, "select * from tb_barang");
+                                        $t = mysqli_query($kns, "select * from tb_produksi");
                                         while ($y = mysqli_fetch_array($t)) {
-                                            $idus = $y['id_supplier'];
-                                            $idbar = $y['id_barang'];
-                                            $ck = mysqli_query($kns, "SELECT * FROM tb_supplier where id_supplier = '$idus' ");
-                                            $cck = mysqli_fetch_array($ck);
-                                            $nmas = $cck['nama_supplier'];
-                                            $ck2 = mysqli_query($kns, "SELECT * FROM tb_stok where id_barang = '$idbar' ");
-                                            $cck2 = mysqli_fetch_array($ck2);
-                                            $stok = $cck2['stok_sekarang'];
                                             echo "<tr>
-                                                    <td>$y[id_barang]</td>
-                                                    <td>$y[tgl]</td>
+                                                    <td>$y[kode_barang]</td>
+                                                    <td>$y[tgl_produksi]</td>
                                                     <td>$y[nama_barang]</td>
-                                                    <td>Rp. " . number_format($y['harga']) . "</td>
                                                     <td>$y[jumlah]</td>
-                                                    <td>$nmas</td>
                                                 </tr>";
                                         }
                                         ?>
@@ -254,8 +242,6 @@ session_start();
                 ]
             });
         });
-
-        
     </script>
 
     <!-- Bootstrap tether Core JavaScript -->

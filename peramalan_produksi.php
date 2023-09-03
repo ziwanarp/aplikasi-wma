@@ -4,8 +4,8 @@ session_start();
 include "kns.php";
 $koneksi = $kns;
 
-$querysum = "SELECT SUM(jumlah) FROM tb_barang";
-$querytampil = "SELECT SUM(jumlah), SUBSTR(tgl, 6, 2) AS bulan, SUBSTR(tgl, 1, 4) AS tahun FROM tb_barang GROUP BY bulan , tahun ORDER BY tahun, bulan;";
+$querysum = "SELECT SUM(jumlah) FROM tb_produksi";
+$querytampil = "SELECT SUM(jumlah), SUBSTR(tgl_produksi, 6, 2) AS bulan, SUBSTR(tgl_produksi, 1, 4) AS tahun FROM tb_produksi GROUP BY bulan , tahun ORDER BY tahun, bulan;";
 
 
 

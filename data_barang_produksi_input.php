@@ -1,28 +1,36 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
-$tgl = date('d-m-Y h:i:s');
-$tgl2 = date('Y-m-d');
-$bataswaktu = date('d-m-Y h:i:s', strtotime('+3 month', strtotime($tgl)));
+// error_reporting(0);
 session_start();
+
+
 include "kns.php";
-
-
-extract($_GET);
+extract($_POST);
 if (isset($save)) {
 
+    $kode_barang = "PRD_".substr($id_barang,4);
 
-    if ($harga <= 25000) {
-        $id_barang = $kode_barang . '_UN25/' . rand(100, 999);
-    } else {
-        $id_barang = $kode_barang . '_UP25/' . rand(100, 999);
-    }
-    $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,harga,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$harga','$isi','$banyaknya','$jumlah','$supplier','9')");
+    $smp = mysqli_query($kns, "insert into tb_produksi values(null,'$tgl_produksi','$id_barang','$kode_barang','$nama_barang','$isi','$banyaknya','$jumlah')");
     if ($smp) {
-        mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
+        $penjualan2 = mysqli_query($kns, "select
+                                                     tb_stok.id_stok as idstok, 
+                                                     tb_barang.id_barang as id, 
+                                                     
+                                                     tb_stok.stok_sekarang as stok
+                                                     from tb_stok
+                                                     inner join tb_barang on tb_stok.id_barang = tb_barang.id_barang");
+        while ($penjualan3 = mysqli_fetch_array($penjualan2)) {
+            if ($penjualan3['id'] == $nama_barang) {
+                $stok = $penjualan3['stok'];
+                $total = $penjualan3['stok'] - $jumlah;
+                $idstok = $penjualan3['idstok'];
+                mysqli_query($kns, "insert into tb_persediaan values('','$tgl','$nama_barang','$idstok','$jumlah','$stok')");
+                mysqli_query($kns, "update tb_stok set stok_sekarang = '$total' where id_barang ='$nama_barang'");
+            }
+        }
 
-        echo "<script>alert('Berhasil Disimpan'); location.href='data_barang.php';</script>";
+        echo "<script>alert('Berhasil disimpan'); location.href='data_barang_produksi.php';</script>";
     } else {
-        echo "<script>alert('Data Barang sudah ada, coba masukkan barang yang lain'); location.href='data_barang_produksi.php';</script>";
+        echo "<script>alert('gagal disimpan'); location.href='data_barang_produksi.php';</script>";
     }
 }
 ?>
@@ -38,15 +46,9 @@ if (isset($save)) {
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon1.png">
-    <title>UD. Rajabawang</title>
+    <title>UD. RAJABAWANG</title>
     <!-- Bootstrap Core CSS -->
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- chartist CSS -->
-    <link href="assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
-    <link href="assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
-    <link href="assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
-    <!--This page css - Morris CSS -->
-    <link href="assets/plugins/c3-master/c3.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -107,16 +109,11 @@ if (isset($save)) {
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
-
-                        <h4 class="text-white card-title align-self-center col-md-12 col-12">SISTEM INFORMASI PERAMALAN PERSEDIAAN
-                            UD.RAJABAWANG </h4>
-
-                        </li>
+                        <h4 class="text-white card-title align-self-center col-md-12 col-12">SISTEM INFORMASI PERAMALAN PERSEDIAAN UD. RAJABAWANG</h4>
                     </ul>
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
-
                 </div>
             </nav>
         </header>
@@ -135,7 +132,6 @@ if (isset($save)) {
             </div>
             <!-- End Sidebar scroll-->
 
-
         </aside>
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
@@ -153,7 +149,7 @@ if (isset($save)) {
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">Tambah Data Barang</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">Input Data Produksi</h3>
                     </div>
                     <div class="col-md-7 col-4 align-self-center">
                         <a href="logout.php" class="btn waves-effect waves-light btn-danger pull-right">Logout</a>
@@ -172,77 +168,58 @@ if (isset($save)) {
                     <div class="col-lg-12 col-xlg-9 col-md-7">
                         <div class="card">
                             <div class="card-block">
-                                <form class="form-horizontal form-material">
+                                <form class="form-horizontal form-material" method="POST">
+                                    <div class="form-group">
+                                        <label class="col-md-4">Tanggal Produksi</label>
+                                        <div class="col-md-3">
+                                            <input type="date" class="form-control form-control-line" name="tgl_produksi" required>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-md-4">Kode Barang</label>
                                         <div class="col-md-3">
-                                            <select name="kode_barang" class="form-control">
-                                                <option value="BSB">BSB</option>
-                                                <option value="BSA">BSA</option>
-                                                <option value="BS">BS</option>
-                                                <option value="BM">BM</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4">Tanggal</label>
-                                        <div class="col-md-3">
-                                            <input type="date" class="form-control form-control-line" name="tanggal" required="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4">Supplier</label>
-                                        <div class="col-md-3">
-                                            <select name="supplier" class="form-control">
+                                            <select class="form-control" name="id_barang" style="width:250px;">
                                                 <?php
-                                                $suppliernya = mysqli_query($kns, "SELECT * FROM tb_supplier");
-                                                while ($ceknya = mysqli_fetch_array($suppliernya)) { ?>
-                                                    <option value="<?php echo $ceknya['id_supplier'] ?>"><?php echo $ceknya['nama_supplier']; ?></option>
-                                                <?php } ?>
+                                                $x = mysqli_query($kns, "select * from tb_barang");
+                                                while ($y = mysqli_fetch_array($x)) {
+                                                    echo "
+                                                      <option value='$y[id_barang]'>$y[id_barang]</option>";
+                                                }
+                                                ?>
+
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4">Nama Barang</label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control form-control-line" name="nama" required="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4">Satuan</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control form-control-line" name="satuan" required="">
+                                            <input type="text" class="form-control form-control-line" name="nama_barang" id="nama_barang" onkeyup='check()'>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4">Isi</label>
                                         <div class="col-md-3">
-                                            <input type="number" step="0.01" class="form-control form-control-line" id="isi" name="isi" required="" onkeyup='check()'>
+                                            <input type="number" step="0.01" class="form-control form-control-line" name="isi" id="isi" onkeyup='check()'>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4">Banyaknya</label>
                                         <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-line" id="banyaknya" name="banyaknya" required="" onkeyup='check()'>
+                                            <input type="number" class="form-control form-control-line" name="banyaknya" id="banyaknya" onkeyup='check()'>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4">Jumlah</label>
                                         <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-line" id="jumlah" name="jumlah" readonly>
+                                            <input type="number" class="form-control form-control-line" name="jumlah" id="jumlah" readonly>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4">Harga (Rp.)</label>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-line" name="harga" required="">
-                                        </div>
-                                    </div>
-
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <button class="btn btn-primary" name="save">Simpan</button>
-                                            <a href="data_barang_produksi.php" class="btn btn-success">batal</a>
+                                            <button type="submit" class="btn btn-primary" name="save">
+                                                <span class="glyphicon glyphicon-edit"></span> Simpan </button>
+                                            <a href="data_barang_prosuksi.php" type="button" class="btn btn-danger">
+                                                <span class="glyphicon glyphicon-remove-sign"></span> Batal </a>
                                         </div>
                                     </div>
                                 </form>
@@ -262,8 +239,8 @@ if (isset($save)) {
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer">
-                @Copyright Efan Febriana 2023
+            <footer class="footer" align="center">
+                © Copyright Efan Febriana 2023
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
