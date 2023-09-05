@@ -22,7 +22,7 @@ $n_alpha;
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon1.png">
-    <title>Laporan Data Peramlan</title>
+    <title>Laporan Data Peramalan Penjualan</title>
     <!-- Bootstrap Core CSS -->
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- chartist CSS -->
@@ -140,7 +140,7 @@ $n_alpha;
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor">Laporan Data Peramlan</h3>
+                        <h3 class="text-themecolor">Laporan Data Peramlan Penjualan</h3>
                         <br>
 
 
@@ -165,7 +165,15 @@ $n_alpha;
                             <div class="card-block">
                                 <a class="btn btn-success" href="laporan.php">Laporan Penjualan</a>
                                 <a class="btn btn-warning" href="laporan_data_barang_produksi.php">Laporan Data Produksi</a>
-                                <a class="btn btn-danger" href="laporan_peramalan.php">Laporan Peramalan</a>
+                                <!-- <a class="btn btn-danger" href="laporan_peramalan.php">Laporan Peramalan</a> -->
+                                <div class="btn-group">
+                                    <a type="button" class="btn btn-danger dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Laporan Peramalan</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="laporan_peramalan_produksi.php">Peramalan Produksi</a>
+                                        <a class="dropdown-item" href="laporan_peramalan.php">Peramalan Penjualan</a>
+                                    </div>
+                                    </div>
                                 <a class="btn btn-info" href="laporan_data_barang_masuk.php">Laporan Barang Masuk</a>
                             </div>
                         </div>
@@ -173,7 +181,7 @@ $n_alpha;
                         <div class="card">
                             <div class="card-block">
                                 <center>
-                                    <h3><b>Laporan Data Peramalan</b> </h3>
+                                    <h3><b>Laporan Data Peramalan Penjualan</b> </h3>
                                 </center>
                                 <br>
                                 <table id="example" class="table table-striped" width="100%">

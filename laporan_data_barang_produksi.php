@@ -151,7 +151,15 @@ session_start();
                             <div class="card-block">
                                 <a class="btn btn-success" href="laporan.php">Laporan Penjualan</a>
                                 <a class="btn btn-warning" href="laporan_data_barang_produksi.php">Laporan Data Produksi</a>
-                                <a class="btn btn-danger" href="laporan_peramalan.php">Laporan Peramalan</a>
+                                <!-- <a class="btn btn-danger" href="laporan_peramalan.php">Laporan Peramalan</a> -->
+                                <div class="btn-group">
+                                    <a type="button" class="btn btn-danger dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Laporan Peramalan</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="laporan_peramalan_produksi.php">Peramalan Produksi</a>
+                                        <a class="dropdown-item" href="laporan_peramalan.php">Peramalan Penjualan</a>
+                                    </div>
+                                    </div>
                                 <a class="btn btn-info" href="laporan_data_barang_masuk.php">Laporan Barang Masuk</a>
                             </div>
                         </div>
