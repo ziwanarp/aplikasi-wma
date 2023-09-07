@@ -147,7 +147,7 @@ session_start();
                         <div class="card">
                             <div class="card-block">
                                 <div class="form-group">
-                                    <a href="data_barang_produksi_input.php" class="btn waves-effect waves-light btn-primary">Tambah data</a>
+                                    <a href="data_barang_masuk_input.php" class="btn waves-effect waves-light btn-primary">Tambah data</a>
                                 </div>
                             </div>
                             <div class="table-responsive">

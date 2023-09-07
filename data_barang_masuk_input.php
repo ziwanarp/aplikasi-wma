@@ -12,13 +12,13 @@ if (isset($save)) {
 
 
     $id_barang = $kode_barang . '_' . rand(1000, 9999);
-    $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,harga,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$harga','$isi','$banyaknya','$jumlah','$supplier','2')");
+    $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,harga,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$harga','$isi','$banyaknya','$jumlah','$supplier','9')");
     if ($smp) {
         mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
 
-        echo "<script>alert('Berhasil Disimpan'); location.href='data_barang.php';</script>";
+        echo "<script>alert('Berhasil Disimpan'); location.href='data_barang_masuk.php';</script>";
     } else {
-        echo "<script>alert('Data Barang sudah ada, coba masukkan barang yang lain'); location.href='data_barang_produksi.php';</script>";
+        echo "<script>alert('Data Barang sudah ada, coba masukkan barang yang lain'); location.href='data_barang_masuk.php';</script>";
     }
 }
 ?>
@@ -149,7 +149,7 @@ if (isset($save)) {
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">Tambah Data Barang</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">Tambah Data Barang Masuk</h3>
                     </div>
                     <div class="col-md-7 col-4 align-self-center">
                         <a href="logout.php" class="btn waves-effect waves-light btn-danger pull-right">Logout</a>
