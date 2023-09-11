@@ -11,8 +11,8 @@ extract($_GET);
 if (isset($save)) {
 
 
-    $id_barang = $kode_barang . '_' . rand(1000, 9999);
-    $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,harga,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$harga','$isi','$banyaknya','$jumlah','$supplier','9')");
+    $id_barang = $kode_barang . '_' . rand(100, 999);
+    $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$isi','$banyaknya','$jumlah','$supplier','9')");
     if ($smp) {
         mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
 
@@ -228,12 +228,12 @@ if (isset($save)) {
                                             <input type="number" class="form-control form-control-line" id="jumlah" name="jumlah" readonly>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-4">Harga (Rp.)</label>
                                         <div class="col-md-3">
                                             <input type="number" class="form-control form-control-line" name="harga" required="">
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="form-group">
                                         <div class="col-sm-12">

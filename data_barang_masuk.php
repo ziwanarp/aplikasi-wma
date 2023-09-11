@@ -155,11 +155,9 @@ session_start();
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Id Barang</th>
                                             <th>Tanggal</th>
                                             <th>Kode Barang</th>
                                             <th>Nama Barang</th>
-                                            <th>Harga</th>
                                             <th>Jumlah</th>
                                             <th>Supplier</th>
                                             <th>Aksi</th>
@@ -168,7 +166,7 @@ session_start();
                                     <?php
                                     include "kns.php";
                                     $no = 1;
-                                    $t = mysqli_query($kns, "SELECT * FROM tb_barang WHERE status_pesanan NOT IN(0,2)");
+                                    $t = mysqli_query($kns, "SELECT * FROM tb_barang WHERE status_pesanan NOT IN(0,2) ORDER BY tgl DESC");
                                     while ($y = mysqli_fetch_array($t)) {
                                         $idus = $y['id_supplier'];
                                         $idbar = $y['id_barang'];
@@ -180,11 +178,9 @@ session_start();
                                         $stok = $cck2['stok_sekarang'];
                                         echo "<tr>
                                                     <td>$no</td>
-                                                    <td>$y[id_barang]</td>
                                                     <td>$y[tgl]</td>
                                                     <td>$y[kode_barang]</td>
                                                     <td>$y[nama_barang]</td>
-                                                    <td>Rp. " . number_format($y['harga']) . "</td>
                                                     <td>$y[jumlah]</td>
                                                     <td>$nmas</td>
                                                     <td>

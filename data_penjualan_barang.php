@@ -181,7 +181,7 @@ session_start();
                                                   tb_penjualan.status as status
                                                   
                                                   from tb_penjualan
-                                                  INNER JOIN tb_barang ON tb_penjualan.id_barang=tb_barang.id_barang") or die(mysqli_error());
+                                                  INNER JOIN tb_barang ON tb_penjualan.id_barang=tb_barang.id_barang ORDER BY tgl_pembeli DESC") or die(mysqli_error());
                                         if (mysqli_num_rows($t) > 0) {
                                             while ($y = mysqli_fetch_array($t)) {
                                                 $c = $y['qty'] * $y['harga'];

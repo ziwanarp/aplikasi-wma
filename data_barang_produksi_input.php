@@ -7,9 +7,14 @@ include "kns.php";
 extract($_POST);
 if (isset($save)) {
 
+    
     $kode_barang = "PRD_".substr($id_barang,4);
 
     $smp = mysqli_query($kns, "insert into tb_produksi values(null,'$tgl_produksi','$id_barang','$kode_barang','$nama_barang','$isi','$banyaknya','$jumlah')");
+
+    // insert tabel stok produksi
+     mysqli_query($kns,"INSERT INTO tb_stok_produksi VALUES (null,'$kode_barang','$id_barang','$nama_barang','$jumlah')");
+
     if ($smp) {
         $penjualan2 = mysqli_query($kns, "select
                                                      tb_stok.id_stok as idstok, 
@@ -19,12 +24,12 @@ if (isset($save)) {
                                                      from tb_stok
                                                      inner join tb_barang on tb_stok.id_barang = tb_barang.id_barang");
         while ($penjualan3 = mysqli_fetch_array($penjualan2)) {
-            if ($penjualan3['id'] == $nama_barang) {
+            if ($penjualan3['id'] == $id_barang) {
                 $stok = $penjualan3['stok'];
                 $total = $penjualan3['stok'] - $jumlah;
                 $idstok = $penjualan3['idstok'];
-                mysqli_query($kns, "insert into tb_persediaan values('','$tgl','$nama_barang','$idstok','$jumlah','$stok')");
-                mysqli_query($kns, "update tb_stok set stok_sekarang = '$total' where id_barang ='$nama_barang'");
+                mysqli_query($kns, "insert into tb_persediaan values('','$tgl_produksi','$id_barang','$idstok','$jumlah','$stok')");
+                mysqli_query($kns, "update tb_stok set stok_sekarang = '$total' where id_barang ='$id_barang'");
             }
         }
 
@@ -176,14 +181,14 @@ if (isset($save)) {
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4">Kode Barang</label>
+                                        <label class="col-md-4">Nama Bahan Baku</label>
                                         <div class="col-md-3">
                                             <select class="form-control" name="id_barang" style="width:250px;">
                                                 <?php
                                                 $x = mysqli_query($kns, "select * from tb_barang");
                                                 while ($y = mysqli_fetch_array($x)) {
                                                     echo "
-                                                      <option value='$y[id_barang]'>$y[id_barang]</option>";
+                                                      <option value='$y[id_barang]'>$y[nama_barang]</option>";
                                                 }
                                                 ?>
 
@@ -191,7 +196,7 @@ if (isset($save)) {
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4">Nama Barang</label>
+                                        <label class="col-md-4">Nama Barang Produksi</label>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control form-control-line" name="nama_barang" id="nama_barang" onkeyup='check()'>
                                         </div>
@@ -218,7 +223,7 @@ if (isset($save)) {
                                         <div class="col-sm-12">
                                             <button type="submit" class="btn btn-primary" name="save">
                                                 <span class="glyphicon glyphicon-edit"></span> Simpan </button>
-                                            <a href="data_barang_prosuksi.php" type="button" class="btn btn-danger">
+                                            <a href="data_barang_produksi.php" type="button" class="btn btn-danger">
                                                 <span class="glyphicon glyphicon-remove-sign"></span> Batal </a>
                                         </div>
                                     </div>

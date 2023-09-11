@@ -7,24 +7,15 @@ include "kns.php";
 extract($_POST);
 if (isset($save)) {
 
-    $kode_barang = explode("_", $nama_barang);
+    $kode_barang = explode("_", $id_barang);
 
-    $smp = mysqli_query($kns, "insert into tb_penjualan values(null,'$tgl','$nama_pembeli','$nama_barang','$kode_barang[0]','$isi','$banyaknya','$qty','$harga','9')");
+    $smp = mysqli_query($kns, "insert into tb_penjualan values(null,'$tgl','$nama_pembeli','$id_barang','$kode_barang[0]','$isi','$banyaknya','$qty','$harga','9')");
     if ($smp) {
-        $penjualan2 = mysqli_query($kns, "select
-                                                     tb_stok.id_stok as idstok, 
-                                                     tb_barang.id_barang as id, 
-                                                     
-                                                     tb_stok.stok_sekarang as stok
-                                                     from tb_stok
-                                                     inner join tb_barang on tb_stok.id_barang = tb_barang.id_barang");
+        $penjualan2 = mysqli_query($kns, "SELECT * FROM tb_stok_produksi");
         while ($penjualan3 = mysqli_fetch_array($penjualan2)) {
-            if ($penjualan3['id'] == $nama_barang) {
-                $stok = $penjualan3['stok'];
-                $total = $penjualan3['stok'] - $qty;
-                $idstok = $penjualan3['idstok'];
-                mysqli_query($kns, "insert into tb_persediaan values('','$tgl','$nama_barang','$idstok','$qty','$stok')");
-                mysqli_query($kns, "update tb_stok set stok_sekarang = '$total' where id_barang ='$nama_barang'");
+            if ($penjualan3['id_barang'] == $id_barang) {
+                $total = $penjualan3['stock'] - $qty;
+                mysqli_query($kns, "update tb_stok_produksi set stock = '$total' where id_barang ='$id_barang'");
             }
         }
 
@@ -184,12 +175,12 @@ if (isset($save)) {
                                     <div class="form-group">
                                         <label class="col-md-4">Kode Barang</label>
                                         <div class="col-md-3">
-                                            <select class="form-control" name="nama_barang" style="width:250px;">
+                                            <select class="form-control" name="id_barang" style="width:250px;">
                                                 <?php
-                                                $x = mysqli_query($kns, "select * from tb_barang");
+                                                $x = mysqli_query($kns, "select * from tb_produksi");
                                                 while ($y = mysqli_fetch_array($x)) {
                                                     echo "
-                                                      <option value='$y[id_barang]'>$y[id_barang]</option>";
+                                                      <option value='$y[id_barang]'>$y[nama_barang]</option>";
                                                 }
                                                 ?>
 

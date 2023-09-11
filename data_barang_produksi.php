@@ -159,7 +159,7 @@ session_start();
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kode Barang</th>
+                                            <th>Kode Produksi</th>
                                             <th>Tanggal Produksi</th>
                                             <th>Nama Barang</th>
                                             <th>Jumlah</th>
@@ -183,6 +183,40 @@ session_start();
                                                         <a class=\"btn btn-sm btn-info\"href=edit_barang.php?id=$y[id]><span class=\"glyphicon glyphicon-pencil\"></span> Edit</a>
                                                         <a onclick=\"return confirm('Hapus data ?');\" class=\"btn btn-sm btn-danger\" href=hapus_barang.php?id=$y[id] onClick='return confirm(\"Anda yakin menghapus data ini?\")';><span class=\"glyphicon glyphicon-remove\"></span> Hapus</a>
                                                     </td>
+                                                </tr>";
+                                        $no++;
+                                    }
+                                    ?>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="form-group">
+                                    <h3 class="text-center">Stock Barang Produksi</h3>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Barang</th>
+                                            <th>Jumlah</th>
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                    include "kns.php";
+                                    $no = 1;
+                                    $t = mysqli_query($kns, "SELECT nama_barang, SUM(stock) as jumlah FROM tb_stok_produksi GROUP BY nama_barang");
+
+
+                                    while ($y = mysqli_fetch_array($t)) {
+                                        echo "<tr>
+                                                    <td>$no</td>
+                                                    <td>$y[nama_barang]</td>
+                                                    <td>$y[jumlah]</td>
                                                 </tr>";
                                         $no++;
                                     }

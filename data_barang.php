@@ -156,10 +156,9 @@ session_start();
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>ID</th>
+                                            <th>Nama Barang</th>
                                             <th>Kode Barang</th>
                                             <th>Stok</th>
-                                            <th>Harga</th>
 
                                         </tr>
                                     </thead>
@@ -178,10 +177,9 @@ session_start();
                                         $stok = $cck2['stok_sekarang'];
                                         echo "<tr>
                                                     <td>$no</td>
-                                                    <td>$y[id_barang]</td>
+                                                    <td>$y[nama_barang]</td>
                                                     <td>$y[kode_barang]</td>
                                                     <td>$stok</td>
-                                                    <td>Rp. " . number_format($y['harga']) . "</td>
                                                     
 
                                                 </tr>";
