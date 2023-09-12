@@ -10,15 +10,37 @@ include "kns.php";
 extract($_GET);
 if (isset($save)) {
 
+    $data = mysqli_query($kns,"SELECT * FROM tb_barang WHERE kode_barang = '$kode_barang' AND nama_barang = '$nama' AND id_supplier = '$supplier'");
+    $data = mysqli_fetch_row($data);
 
-    $id_barang = $kode_barang . '_' . rand(100, 999);
-    $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$isi','$banyaknya','$jumlah','$supplier','9')");
-    if ($smp) {
-        mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
+    if($data != null || $data != false){
+        // $data[8] = jumlah
+        $data[8] += (int)$jumlah;
 
-        echo "<script>alert('Berhasil Disimpan'); location.href='data_barang_masuk.php';</script>";
+        $smp = mysqli_query($kns, "UPDATE tb_barang SET jumlah = '$data[8]' WHERE kode_barang ='$kode_barang' AND nama_barang = '$nama' AND id_supplier = '$supplier'");
+
+        if ($smp) {
+            $stok = mysqli_query($kns, "SELECT stok_sekarang FROM tb_stok WHERE id_barang = '$data[0]'");
+            $stok = mysqli_fetch_row($stok);
+
+            $stok[0] += $jumlah;
+
+            $tabel = mysqli_query($kns, "UPDATE tb_stok SET stok_sekarang = '$stok[0]' WHERE id_barang = '$data[0]'");
+            echo "<script>alert('Berhasil Disimpan'); location.href='data_barang_masuk.php';</script>";
+        } else {
+            echo "<script>alert('Data gagal disimpan !'); location.href='data_barang_masuk.php';</script>";
+        }
+
     } else {
-        echo "<script>alert('Data Barang sudah ada, coba masukkan barang yang lain'); location.href='data_barang_masuk.php';</script>";
+        $id_barang = $kode_barang . '_' . rand(100, 999);
+        $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$isi','$banyaknya','$jumlah','$supplier','9')");
+
+        if ($smp) {
+            mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
+            echo "<script>alert('Berhasil Disimpan'); location.href='data_barang_masuk.php';</script>";
+        } else {
+            echo "<script>alert('Data gagal disimpan !'); location.href='data_barang_masuk.php';</script>";
+        }
     }
 }
 ?>

@@ -7,13 +7,31 @@ include "kns.php";
 extract($_POST);
 if (isset($save)) {
 
+    // cek duplikasi data barang
+    $data = mysqli_query($kns,"SELECT * FROM tb_produksi WHERE nama_barang = '$nama_barang' AND id_barang = '$id_barang'");
+    $data = mysqli_fetch_row($data);
     
-    $kode_barang = "PRD_".substr($id_barang,4);
+    if($data != null || $data != false) {
+        // data[7] = jumlah
+        $data[7] += $jumlah;
+        
+        $smp = mysqli_query($kns,"UPDATE tb_produksi SET jumlah = '$data[7]' WHERE nama_barang = '$nama_barang' AND id_barang = '$id_barang'");
 
-    $smp = mysqli_query($kns, "insert into tb_produksi values(null,'$tgl_produksi','$id_barang','$kode_barang','$nama_barang','$isi','$banyaknya','$jumlah')");
+        // update stock di tb_stok_produksi
+        $stok = mysqli_query($kns,"SELECT stock FROM tb_stok_produksi WHERE nama_barang = '$nama_barang' AND id_barang = '$id_barang'");
+        $stok = mysqli_fetch_row($stok);
+        $stok[0] += $jumlah;
 
-    // insert tabel stok produksi
-     mysqli_query($kns,"INSERT INTO tb_stok_produksi VALUES (null,'$kode_barang','$id_barang','$nama_barang','$jumlah')");
+        mysqli_query($kns,"UPDATE tb_stok_produksi SET stock ='$stok[0]' WHERE nama_barang = '$nama_barang' AND id_barang = '$id_barang'");
+    } else {
+        $kode_barang = "PRD_".substr($id_barang,4);
+        $smp = mysqli_query($kns, "insert into tb_produksi values(null,'$tgl_produksi','$id_barang','$kode_barang','$nama_barang','$isi','$banyaknya','$jumlah')");
+
+        // insert tabel stok produksi
+        mysqli_query($kns,"INSERT INTO tb_stok_produksi VALUES (null,'$kode_barang','$id_barang','$nama_barang','$jumlah')");
+    }
+    
+    
 
     if ($smp) {
         $penjualan2 = mysqli_query($kns, "select
@@ -196,7 +214,7 @@ if (isset($save)) {
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4">Nama Barang Produksi</label>
+                                        <label class="col-md-4">Kode Produksi</label>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control form-control-line" name="nama_barang" id="nama_barang" onkeyup='check()'>
                                         </div>

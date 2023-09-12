@@ -159,9 +159,9 @@ session_start();
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kode Produksi</th>
+                                            <!-- <th>Kode Produksi</th> -->
                                             <th>Tanggal Produksi</th>
-                                            <th>Nama Barang</th>
+                                            <th>Kode Produksi</th>
                                             <th>Jumlah</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -174,8 +174,7 @@ session_start();
 
                                     while ($y = mysqli_fetch_array($t)) {
                                         echo "<tr>
-                                                    <td>$no</td>
-                                                    <td>$y[kode_barang]</td>
+                                                    <td>$no</td>                                                 
                                                     <td>$y[tgl_produksi]</td>
                                                     <td>$y[nama_barang]</td>
                                                     <td>$y[jumlah]</td>

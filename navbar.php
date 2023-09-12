@@ -17,11 +17,11 @@
             <li class="sidebar-title badge badge-info">Data Transaksi</li>
             <li> <a class="waves-effect waves-dark" href="data_penjualan_barang.php" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Data Penjualan</span></a>
             </li>
-            <li> <a class="waves-effect waves-dark" href="request_pembelian.php" aria-expanded="false"><i class="mdi-cash-usd"></i><span class="hide-menu">Request Pembelian</span></a>
+            <li> <a class="waves-effect waves-dark" href="request_pembelian.php" aria-expanded="false"><i class="mdi mdi-cash-usd"></i><span class="hide-menu">Request Pembelian</span></a>
             </li>
             <li> <a class="waves-effect waves-dark" href="data_barang_produksi.php" aria-expanded="false"><i class="mdi mdi-bulletin-board"></i><span class="hide-menu">Data Barang Produksi</span></a>
             </li>
-            <li> <a class="waves-effect waves-dark" href="data_barang_masuk.php" aria-expanded="false"><i class="mdi mdi-bulletin-board"></i><span class="hide-menu">Data Barang Masuk</span></a>
+            <li> <a class="waves-effect waves-dark" href="data_barang_masuk.php" aria-expanded="false"><i class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Data Barang Masuk</span></a>
             </li>
             <li> <a class="waves-effect waves-dark" href="data_barang.php" aria-expanded="false"><i class="mdi mdi-database"></i><span class="hide-menu">Data Stok Barang</span></a>
             </li>
