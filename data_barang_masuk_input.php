@@ -195,10 +195,13 @@ if (isset($save)) {
                                         <label class="col-md-4">Kode Barang</label>
                                         <div class="col-md-3">
                                             <select name="kode_barang" class="form-control">
+                                                <option value="A">A</option>
+                                                <option value="AB">AB</option>
+                                                <option value="B">B</option>
+                                                <option value="BC">BC</option>
                                                 <option value="BSB">BSB</option>
                                                 <option value="BSA">BSA</option>
-                                                <option value="BS">BS</option>
-                                                <option value="BM">BM</option>
+                                                <option value="C">C</option>
                                             </select>
                                         </div>
                                     </div>
