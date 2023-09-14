@@ -33,7 +33,7 @@ if (isset($save)) {
 
     } else {
         $id_barang = $kode_barang . '_' . rand(100, 999);
-        $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$isi','$banyaknya','$jumlah','$supplier','9')");
+        $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$isi','$banyaknya','$jumlah','$supplier','2')");
 
         if ($smp) {
             mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
