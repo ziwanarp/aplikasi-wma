@@ -180,7 +180,7 @@ session_start();
                                                     <td>$y[jumlah]</td>
                                                     <td>
                                                         <a class=\"btn btn-sm btn-info\"href=edit_barang.php?id=$y[id]><span class=\"glyphicon glyphicon-pencil\"></span> Edit</a>
-                                                        <a onclick=\"return confirm('Hapus data ?');\" class=\"btn btn-sm btn-danger\" href=hapus_barang.php?id=$y[id] onClick='return confirm(\"Anda yakin menghapus data ini?\")';><span class=\"glyphicon glyphicon-remove\"></span> Hapus</a>
+                                                        <a onclick=\"return confirm('Hapus data ?');\" class=\"btn btn-sm btn-danger\" href=hapus_barang.php?id=$y[id_barang] onClick='return confirm(\"Anda yakin menghapus data ini?\")';><span class=\"glyphicon glyphicon-remove\"></span> Hapus</a>
                                                     </td>
                                                 </tr>";
                                         $no++;

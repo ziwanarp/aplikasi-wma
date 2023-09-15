@@ -203,10 +203,10 @@ if (isset($save)) {
                                         <div class="col-md-3">
                                             <select class="form-control" name="id_barang" style="width:250px;">
                                                 <?php
-                                                $x = mysqli_query($kns, "select * from tb_barang");
+                                                $x = mysqli_query($kns, "SELECT nama_supplier, nama_barang, id_barang FROM tb_barang INNER JOIN tb_supplier ON tb_barang.id_supplier = tb_supplier.id_supplier");
                                                 while ($y = mysqli_fetch_array($x)) {
                                                     echo "
-                                                      <option value='$y[id_barang]'>$y[nama_barang]</option>";
+                                                      <option value='$y[id_barang]'>$y[nama_barang] ($y[nama_supplier]) </option>";
                                                 }
                                                 ?>
 

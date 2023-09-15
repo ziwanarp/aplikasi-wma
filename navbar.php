@@ -23,8 +23,8 @@
             </li>
             <li> <a class="waves-effect waves-dark" href="data_barang_masuk.php" aria-expanded="false"><i class="mdi mdi-inbox-arrow-down"></i><span class="hide-menu">Data Barang Masuk</span></a>
             </li>
-            <li> <a class="waves-effect waves-dark" href="data_barang.php" aria-expanded="false"><i class="mdi mdi-database"></i><span class="hide-menu">Data Stok Barang</span></a>
-            </li>
+            <!-- <li> <a class="waves-effect waves-dark" href="data_barang.php" aria-expanded="false"><i class="mdi mdi-database"></i><span class="hide-menu">Data Stok Barang</span></a>
+            </li> -->
 
             </li>
         <?php } else if ($_SESSION['hak_akses'] == "owner") { ?>

@@ -61,15 +61,15 @@ if ($_SESSION['hak_akses'] != "admin") {
                     <a class="navbar-brand" href="admin.php">
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            
+
                             <!-- Light Logo icon -->
-                            <img src="assets/images/logo.png" alt="homepage" class="light-logo" />
+                            <img src="assets/images/logo1.png" alt="homepage" class="light-logo" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text --><span>
-                         
-                         <!-- Light Logo text -->    
-                         </span> </a>
+
+                            <!-- Light Logo text -->
+                            <img src="assets/images/text1.png?v=1" class="light-logo" alt="homepage" /></span> </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->

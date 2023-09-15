@@ -195,6 +195,54 @@ session_start();
                             </div>
                         </div>
                     </div>
+
+                    <!-- column -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="form-group text-center">
+                                    <h3>Data Stok Barang</h3>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Barang</th>
+                                            <th>Kode Barang</th>
+                                            <th>Stok</th>
+
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                    include "kns.php";
+                                    $no = 1;
+                                    $t = mysqli_query($kns, "select * from tb_barang WHERE status_pesanan NOT IN(0,2)");
+                                    while ($y = mysqli_fetch_array($t)) {
+                                        $idus = $y['id_supplier'];
+                                        $idbar = $y['id_barang'];
+                                        $ck = mysqli_query($kns, "SELECT * FROM tb_supplier where id_supplier = '$idus' ");
+                                        $cck = mysqli_fetch_array($ck);
+
+                                        $ck2 = mysqli_query($kns, "SELECT * FROM tb_stok where id_barang = '$idbar' ");
+                                        $cck2 = mysqli_fetch_array($ck2);
+                                        $stok = $cck2['stok_sekarang'];
+                                        echo "<tr>
+                                                    <td>$no</td>
+                                                    <td>$y[nama_barang]</td>
+                                                    <td>$y[kode_barang]</td>
+                                                    <td>$stok</td>
+                                                    
+
+                                                </tr>";
+                                        $no++;
+                                    }
+                                    ?>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- ============================================================== -->

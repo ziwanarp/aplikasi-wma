@@ -3,9 +3,10 @@
            
             include "kns.php";
             extract($_GET);
-            $del=mysqli_query($kns,"delete from tb_barang where id_barang='$id'");
-            if($del)
-              echo "<script>alert('Berhasil dihapus'); location.href='data_barang.php';</script>";
+            $del=mysqli_query($kns,"DELETE FROM tb_produksi where id_barang='$id'");
+            $dol=mysqli_query($kns,"DELETE FROM tb_stok_produksi where id_barang='$id'");
+            if($del && $dol)
+              echo "<script>alert('Berhasil dihapus'); location.href='data_barang_produksi.php';</script>";
             else
               echo "Gagal Dihapus";
 ?>
