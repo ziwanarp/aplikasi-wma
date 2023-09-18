@@ -2,7 +2,7 @@
 session_start();
 include "kns.php";
 
-$querytampil = "SELECT id_barang, SUM(jml_penjualan) as penjualan, SUBSTR(tgl_penjualan, 6, 2) AS bulan, SUBSTR(tgl_penjualan, 1, 4) AS tahun FROM tb_penjualan GROUP BY bulan , tahun ORDER BY tahun, bulan";
+$querytampil = "SELECT id_barang, SUM(harga * jml_penjualan) as harga, SUM(jml_penjualan) as penjualan, SUBSTR(tgl_penjualan, 6, 2) AS bulan, SUBSTR(tgl_penjualan, 1, 4) AS tahun FROM tb_penjualan GROUP BY bulan , tahun ORDER BY tahun, bulan";
 
 $resultquery = mysqli_query($kns, $querytampil);
 $no = 1;
@@ -189,13 +189,15 @@ $no = 1;
                                             <th scope="col">No.</th>
                                             <th scope="col">Bulan / Tahun</th>
                                             <th scope="col">Total Penjualan</th>
+                                            <th scope="col">Total Harga</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                             <?php while ($row = mysqli_fetch_row($resultquery)) { ?>
                                             <tr>
                                                 <th scope="row"><?= $no ?></th>
-                                                <td><?= $row[2] . "/" . $row[3] ?></td>
+                                                <td><?= $row[3] . "/" . $row[4] ?></td>
+                                                <td><?= $row[2] ?></td>
                                                 <td><?= $row[1] ?></td>
                                             </tr>
                                             <?php $no += 1;

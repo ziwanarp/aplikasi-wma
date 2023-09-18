@@ -170,7 +170,7 @@ $no = 1;
                                         <a class="dropdown-item" href="laporan_peramalan_produksi.php">Peramalan Produksi</a>
                                         <a class="dropdown-item" href="laporan_peramalan.php">Peramalan Penjualan</a>
                                     </div>
-                                    </div>
+                                </div>
                                 <a class="btn btn-info" href="laporan_data_barang_masuk.php">Laporan Barang Masuk</a>
                             </div>
                         </div>
@@ -188,7 +188,7 @@ $no = 1;
                                             <th scope="col">No.</th>
                                             <th scope="col">Bulan / Tahun</th>
                                             <th scope="col">Kode Barang</th>
-                                            <th scope="col">Total Penjualan</th>
+                                            <th scope="col">Total Jumlah</th>
                                         </tr>
                                     </thead>
                                     <tbody>

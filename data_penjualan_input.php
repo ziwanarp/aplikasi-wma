@@ -173,14 +173,14 @@ if (isset($save)) {
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4">Kode Barang</label>
+                                        <label class="col-md-4">Kode Barang / Kode Produksi</label>
                                         <div class="col-md-3">
                                             <select class="form-control" name="id_barang" style="width:250px;">
                                                 <?php
                                                 $x = mysqli_query($kns, "select * from tb_produksi");
                                                 while ($y = mysqli_fetch_array($x)) {
                                                     echo "
-                                                      <option value='$y[id_barang]'>$y[nama_barang]</option>";
+                                                      <option value='$y[id_barang]'>$y[nama_barang] ($y[kode_barang])</option>";
                                                 }
                                                 ?>
 

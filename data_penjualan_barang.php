@@ -153,7 +153,7 @@ session_start();
                                                 <th>NO</th>
                                                 <th>Tanggal</th>
                                                 <th>Nama Pembeli</th>
-                                                <th>Nama Barang</th>
+                                                <!-- <th>Nama Barang</th> -->
                                                 <th>Kode</th>
                                                 <th>Isi</th>
                                                 <th>Banyaknya</th>
@@ -190,7 +190,7 @@ session_start();
                                                           <td>$no</td>
                                                           <td>$y[tgl_pembeli]</td>
                                                           <td>$y[nama_pembeli]</td>
-                                                          <td>$y[nama_barang]</td>
+                                                        
                                                           <td>$y[kode_barang]</td>
                                                           <td>$y[isi]</td>
                                                           <td>$y[banyaknya]</td>
@@ -228,7 +228,7 @@ session_start();
                                             <tr>
                                                 <th>NO</th>
                                                 <th>Bulan</th>
-                                                <th>Kode Barang</th>
+                                                <!-- <th>Kode Barang</th> -->
                                                 <th>Jumlah</th>
                                                 <th>Total Harga</th>
                                             </tr>
@@ -257,7 +257,7 @@ session_start();
                                                 echo "<tr>
                                                           <td>$no</td>
                                                           <td>$y[bulan] - $y[tahun]</td>
-                                                          <td>$y[kode_barang]</td>
+                               
                                                           <td>$y[qty]</td>
                                                           <td>Rp. " . number_format($c) . "</td>
                                                         </tr>";
