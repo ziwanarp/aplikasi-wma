@@ -2,7 +2,7 @@
 session_start();
 include "kns.php";
 
-$querytampil = "SELECT kode_barang, SUM(jumlah) as jumlah, SUBSTR(tgl, 6, 2) AS bulan, SUBSTR(tgl, 1, 4) AS tahun FROM tb_barang GROUP BY kode_barang,bulan , tahun ORDER BY tahun, bulan,kode_barang";
+$querytampil = "SELECT nama_barang, SUM(jumlah) as jumlah, SUBSTR(tgl, 6, 2) AS bulan, SUBSTR(tgl, 1, 4) AS tahun FROM tb_barang GROUP BY nama_barang,bulan , tahun ORDER BY tahun, bulan,nama_barang";
 
 $resultquery = mysqli_query($kns, $querytampil);
 $no = 1;
@@ -187,7 +187,7 @@ $no = 1;
                                         <tr>
                                             <th scope="col">No.</th>
                                             <th scope="col">Bulan / Tahun</th>
-                                            <th scope="col">Kode Barang</th>
+                                            <th scope="col">Nama Barang</th>
                                             <th scope="col">Total Jumlah</th>
                                         </tr>
                                     </thead>

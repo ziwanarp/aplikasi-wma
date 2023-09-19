@@ -24,7 +24,7 @@ if (isset($save)) {
 
         mysqli_query($kns,"UPDATE tb_stok_produksi SET stock ='$stok[0]' WHERE nama_barang = '$nama_barang' AND id_barang = '$id_barang'");
     } else {
-        $kode_barang = "PRD_".substr($id_barang,4);
+        $kode_barang = "PRD_".rand(1, 9999);
         $smp = mysqli_query($kns, "insert into tb_produksi values(null,'$tgl_produksi','$id_barang','$kode_barang','$nama_barang','$isi','$banyaknya','$jumlah')");
 
         // insert tabel stok produksi
