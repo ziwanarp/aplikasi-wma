@@ -191,7 +191,8 @@ if (isset($save)) {
                         <div class="card">
                             <div class="card-block">
                                 <form class="form-horizontal form-material">
-                                    <div class="form-group">
+                                    <input type="hidden" name="kode_barang" value="A">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-4">Kode Barang</label>
                                         <div class="col-md-3">
                                             <select name="kode_barang" class="form-control">
@@ -204,7 +205,7 @@ if (isset($save)) {
                                                 <option value="C">C</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label class="col-md-4">Tanggal</label>
                                         <div class="col-md-3">
