@@ -1,3 +1,3 @@
 <?php
-	$kns=mysqli_connect("localhost","root","","db_rajabawang") or die ("Server Mati");
+	$kns=mysqli_connect("localhost","root","iqueique","db_rajabawang") or die ("Server Mati");
 ?>

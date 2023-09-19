@@ -154,7 +154,7 @@ session_start();
                                                 <th>Tanggal</th>
                                                 <th>Nama Pembeli</th>
                                                 <!-- <th>Nama Barang</th> -->
-                                                <th>Kode</th>
+                                                <th>Kode Produksi</th>
                                                 <th>Isi</th>
                                                 <th>Banyaknya</th>
                                                 <th>Jumlah</th>
@@ -166,22 +166,23 @@ session_start();
                                         <?php
                                         $no = 1;
                                         include "kns.php";
-                                        $t = mysqli_query($kns, "select 
-                                                  tb_penjualan.id_penjualan as id,
-                                                  tb_penjualan.tgl_penjualan as tgl_pembeli,
-                                                  tb_penjualan.nama_pembeli as nama_pembeli,
-                                                  
-                                                  tb_barang.nama_barang as nama_barang,
-                                                  tb_penjualan.jml_penjualan as qty,
-                                                  tb_penjualan.id_barang as id_barang,
-                                                  tb_penjualan.kode_barang as kode_barang,
-                                                  tb_penjualan.isi as isi,
-                                                  tb_penjualan.banyaknya as banyaknya,
-                                                  tb_penjualan.harga as harga,
-                                                  tb_penjualan.status as status
-                                                  
-                                                  from tb_penjualan
-                                                  INNER JOIN tb_barang ON tb_penjualan.id_barang=tb_barang.id_barang ORDER BY tgl_pembeli DESC") or die(mysqli_error());
+                                        $t = mysqli_query($kns, "SELECT 
+                                        tb_penjualan.id_penjualan AS id,
+                                        tb_penjualan.tgl_penjualan AS tgl_pembeli,
+                                        tb_penjualan.nama_pembeli AS nama_pembeli,
+                                        tb_barang.nama_barang AS nama_barang,
+                                        tb_penjualan.jml_penjualan AS qty,
+                                        tb_penjualan.id_barang AS id_barang,
+                                        tb_penjualan.kode_barang AS kode_barang,
+                                        tb_penjualan.isi AS isi,
+                                        tb_penjualan.banyaknya AS banyaknya,
+                                        tb_penjualan.harga AS  harga,
+                                        tb_penjualan.status AS status,
+                                        tb_produksi.nama_barang AS kode_produksi,
+                                        tb_produksi.kode_barang AS kode_produksi_pk
+                                        FROM tb_penjualan
+                                        INNER JOIN tb_barang ON tb_penjualan.id_barang=tb_barang.id_barang 
+                                        INNER JOIN tb_produksi ON tb_penjualan.id_barang = tb_produksi.id_barang ORDER BY tgl_pembeli DESC") or die(mysqli_error());
                                         if (mysqli_num_rows($t) > 0) {
                                             while ($y = mysqli_fetch_array($t)) {
                                                 $c = $y['qty'] * $y['harga'];
@@ -191,7 +192,7 @@ session_start();
                                                           <td>$y[tgl_pembeli]</td>
                                                           <td>$y[nama_pembeli]</td>
                                                         
-                                                          <td>$y[kode_barang]</td>
+                                                          <td>$y[kode_produksi] ($y[kode_produksi_pk])</td>
                                                           <td>$y[isi]</td>
                                                           <td>$y[banyaknya]</td>
                                                           <td>$y[qty]</td>
@@ -249,7 +250,8 @@ session_start();
                                         tb_penjualan.harga as harga,
                                         tb_penjualan.status as status
                                         FROM tb_penjualan 
-                                        INNER JOIN tb_barang ON tb_penjualan.id_barang=tb_barang.id_barang WHERE status NOT IN (0,2)
+                                        INNER JOIN tb_barang ON tb_penjualan.id_barang=tb_barang.id_barang
+                                        INNER JOIN tb_produksi ON tb_penjualan.id_barang = tb_produksi.id_barang WHERE status NOT IN (0,2)
                                         GROUP BY kode_barang, bulan , tahun ORDER BY tahun, bulan") or die(mysqli_error($kns));
                                         if (mysqli_num_rows($t) > 0) {
                                             while ($y = mysqli_fetch_array($t)) {

@@ -156,7 +156,7 @@ session_start();
                                         <tr>
                                             <th>No</th>
                                             <th>Tanggal</th>
-                                            <th>Kode Barang</th>
+                                            <!-- <th>Kode Barang</th> -->
                                             <th>Nama Barang</th>
                                             <th>Jumlah</th>
                                             <th>Supplier</th>
@@ -179,13 +179,13 @@ session_start();
                                         echo "<tr>
                                                     <td>$no</td>
                                                     <td>$y[tgl]</td>
-                                                    <td>$y[kode_barang]</td>
+                              
                                                     <td>$y[nama_barang]</td>
                                                     <td>$y[jumlah]</td>
                                                     <td>$nmas</td>
                                                     <td>
-                                                        <a class=\"btn btn-sm btn-info\"href=edit_barang.php?id=$y[id_barang]><span class=\"glyphicon glyphicon-pencil\"></span> Edit</a>
-                                                        <a onclick=\"return confirm('Hapus data ?');\" class=\"btn btn-sm btn-danger\" href=hapus_barang.php?id=$y[id_barang] onClick='return confirm(\"Anda yakin menghapus data ini?\")';><span class=\"glyphicon glyphicon-remove\"></span> Hapus</a>
+                                                        <a class=\"btn btn-sm btn-info\"href=edit_barang_masuk.php?id_barang=$y[id_barang]><span class=\"glyphicon glyphicon-pencil\"></span> Edit</a>
+                                                        <a onclick=\"return confirm('Hapus data ?');\" class=\"btn btn-sm btn-danger\" href=hapus_barang_masuk.php?id_barang=$y[id_barang] onClick='return confirm(\"Anda yakin menghapus data ini?\")';><span class=\"glyphicon glyphicon-remove\"></span> Hapus</a>
                                                     </td>
                                                 </tr>";
                                         $no++;
@@ -210,7 +210,7 @@ session_start();
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Barang</th>
-                                            <th>Kode Barang</th>
+                                            <!-- <th>Kode Barang</th> -->
                                             <th>Stok</th>
 
                                         </tr>
@@ -231,7 +231,7 @@ session_start();
                                         echo "<tr>
                                                     <td>$no</td>
                                                     <td>$y[nama_barang]</td>
-                                                    <td>$y[kode_barang]</td>
+                                                    
                                                     <td>$stok</td>
                                                     
 

@@ -8,7 +8,7 @@ extract($_POST);
 if (isset($save)) {
 
     // cek duplikasi data barang
-    $data = mysqli_query($kns,"SELECT * FROM tb_produksi WHERE nama_barang = '$nama_barang' AND id_barang = '$id_barang'");
+    $data = mysqli_query($kns,"SELECT * FROM tb_produksi WHERE nama_barang = '$nama_barang' AND id_barang = '$id_barang' AND tgl_produksi = $tgl_produksi ");
     $data = mysqli_fetch_row($data);
     
     if($data != null || $data != false) {

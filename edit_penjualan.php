@@ -161,12 +161,6 @@ session_start();
                                 <form method="GET" action="update_data_penjualan.php">
                                     <input type="hidden" name="id" value='<?php echo "$data[id_penjualan]"; ?>'>
                                     <div class="form-group">
-                                        <label class="col-md-4">Kode Barang</label>
-                                        <div class="col-md-3">
-                                            <input readonly type="text" class="form-control form-control-line" name="id_barang" value='<?php echo "$data[kode_barang]"; ?>'>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-md-4">Nama Barang</label>
                                         <div class="col-md-3">
                                             <input readonly type="text" class="form-control form-control-line" name="nama_barang" value='<?php echo "$data_brng[nama_barang]"; ?>'>
@@ -201,7 +195,7 @@ session_start();
                                         <div class="col-sm-12">
                                             <button type="submit" class="btn btn-primary" name="update">
                                                 <span class="glyphicon glyphicon-edit"></span> UPDATE </button>
-                                            <a href="data_barang.php" type="button" class="btn btn-danger">
+                                            <a href="data_penjualan_barang.php" type="button" class="btn btn-danger">
                                                 <span class="glyphicon glyphicon-remove-sign"></span> Batal </a>
                                         </div>
                                     </div>

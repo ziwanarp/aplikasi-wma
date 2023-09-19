@@ -128,7 +128,7 @@ session_start();
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">Edit Data Barang</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">Edit Barang Masuk</h3>
                     </div>
                     <div class="col-md-7 col-4 align-self-center">
                         <a href="logout.php" class="btn waves-effect waves-light btn-danger pull-right">Logout</a>
@@ -151,15 +151,21 @@ session_start();
                                 <?php
                                     include "kns.php";
                                     extract($_GET);
-                                    $e=mysqli_query($kns,"SELECT * FROM tb_produksi where id='$id'");
+                                    $e=mysqli_query($kns,"SELECT * FROM tb_barang where id_barang='$id_barang'");
                                     $data=mysqli_fetch_array($e);
                                 ?>
-                                <form method="GET" action="update_barang.php">
-                                    <input type="hidden" name="id" value="<?php echo"$data[id]";?>">
+                                <form method="GET" action="update_barang_masuk.php">
+                                    <input type="hidden" name="id_barang" value="<?php echo"$data[id_barang]";?>">
                                     <div class="form-group">
-                                        <label class="col-md-4">Kode Barang</label>
+                                        <label class="col-md-4">Tanggal</label>
                                         <div class="col-md-3">
-                                            <input readonly type="text" placeholder="Masukan kode barang" class="form-control form-control-line" name="nama_barang" value='<?php echo"$data[nama_barang]";?>'>
+                                            <input type="date" placeholder="Masukan Tanggal" class="form-control form-control-line" name="tgl" value='<?php echo"$data[tgl]";?>'>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Nama Barang</label>
+                                        <div class="col-md-3">
+                                            <input type="text" placeholder="Masukan kode barang" class="form-control form-control-line" name="nama_barang" value='<?php echo"$data[nama_barang]";?>'>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -172,7 +178,7 @@ session_start();
                                         <div class="col-sm-12">
                                             <button type="submit" class="btn btn-primary" name="update">
                                             <span class="glyphicon glyphicon-edit"></span> UPDATE </button>
-                                            <a href="data_barang_produksi.php" type="button" class="btn btn-danger">
+                                            <a href="data_barang_masuk.php" type="button" class="btn btn-danger">
                                             <span class="glyphicon glyphicon-remove-sign"></span> Batal </a>
                                         </div>
                                     </div>
