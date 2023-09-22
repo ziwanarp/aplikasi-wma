@@ -202,11 +202,12 @@ $n_alpha;
 
 
                                         while ($row = mysqli_fetch_row($resultquery)) {
+                                            $data_aktual = $row[0];
 
 
                                             // masukan 3 data pertama ke dalam array
                                             if ($data1 == 0) {
-                                                $data1 = $row[0];
+                                                $data1 = $data_aktual;
 
                                                 if ($data2 != 0 && $data3 != 0) {
                                                     $d3 = $data3 * 2;
@@ -218,7 +219,7 @@ $n_alpha;
                                                     $data2 = 0;
                                                 }
                                             } else if ($data2 == 0) {
-                                                $data2 = $row[0];
+                                                $data2 = $data_aktual;
 
                                                 if ($data1 != 0 && $data3 != 0) {
                                                     $d3 = $data3;
@@ -230,7 +231,7 @@ $n_alpha;
                                                     $data3 = 0;
                                                 }
                                             } else if ($data3 == 0) {
-                                                $data3 = $row[0];
+                                                $data3 = $data_aktual;
 
                                                 $d3 = $data3 * 3;
                                                 $d2 = $data2 * 2;
@@ -251,7 +252,7 @@ $n_alpha;
                                             $array_perkiraan[] = $d_perkiraan;
 
                                             //rumus error
-                                            $error = $row[0] - $d_perkiraan;
+                                            $error = $data_aktual - $d_perkiraan;
 
 
                                             //rumus absolute error
@@ -263,7 +264,7 @@ $n_alpha;
                                             $sum_abs_err2 = $sum_abs_err2 + $abs_err2;
 
                                             //rumus absolute error %
-                                            $abs_err_percent = abs((($row[0] - $d_perkiraan) / $row[0]) * 100);
+                                            $abs_err_percent = abs((($data_aktual - $d_perkiraan) / $data_aktual) * 100);
                                             $sum_abs_err_percent = $sum_abs_err_percent + $abs_err_percent;
 
                                             if ($row[1] == '01') {
@@ -298,7 +299,7 @@ $n_alpha;
                                             $no = $loop + 1;
                                             echo "<td>" . $no . "</td>
 								<td>" . $row[1] . " " . $row[2] . "</td>
-								<td>" . number_format($row[0]) . "</td>";
+								<td>" . number_format($data_aktual) . "</td>";
 
                                             if ($hitung < 3) {
                                                 echo "<td>-</td>";
@@ -333,14 +334,14 @@ $n_alpha;
 
 
                                             //rumus single exponential smoothing
-                                            $h_perkiraan = $d_perkiraan + $n_alpha * ($row[0] - $d_perkiraan);
+                                            $h_perkiraan = $d_perkiraan + $n_alpha * ($data_aktual - $d_perkiraan);
 
                                             //jika data sudah ditampilkan semua, lakukan peramalan untuk bulan berikutnya
                                             $hitung += 1;
                                             $loop = $loop + 1;
                                             if ($loop == $count) {
                                                 echo "</div>";
-                                                $d_aktual_next = $row[0];
+                                                $d_aktual_next = $data_aktual;
                                                 $d_perkiraan_next = $d_perkiraan;
                                                 $d_ft = $d_perkiraan_next + $n_alpha * ($d_aktual_next - $d_perkiraan_next);
 
