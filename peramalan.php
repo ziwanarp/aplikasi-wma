@@ -261,7 +261,7 @@ $n_alpha;
                                             $sum_abs_err2 = $sum_abs_err2 + $abs_err2;
 
                                             //rumus absolute error %
-                                            $abs_err_percent = abs((($row[0] - $d_perkiraan) / $row[0]) * 100);
+                                            $abs_err_percent = abs((($data_aktual - $d_perkiraan) / $data_aktual) * 100 / $count);
                                             $sum_abs_err_percent = $sum_abs_err_percent + $abs_err_percent;
 
                                             if ($row[1] == '01') {
@@ -305,29 +305,29 @@ $n_alpha;
                                                 echo "<td>-</td>";
                                                 echo "<td>-</td>";
                                             } else {
-                                                echo "<td>" . number_format(round($perkiraan_bulan_next)) . "</td>
-									<td>" . number_format(round($error_next)) . "</td>
-									<td>" . number_format(round($abs_err_next)) . "</td>
-									<td>" . number_format(round($abs_err_next2)) . "</td>
-									<td>" . number_format(round($abs_err_percent_next)) . "%</td>";
+                                                echo "<td>" . number_format(round($perkiraan_bulan)) . "</td>
+									<td>" . number_format(round($error)) . "</td>
+									<td>" . number_format(round($abs_err)) . "</td>
+									<td>" . number_format(round($abs_err2)) . "</td>
+									<td>" . number_format(round($abs_err_percent)) . "%</td>";
                                             }
                                             echo "</tr>";
 
-                                            if (isset($perkiraan_bulan)) {
-                                                $perkiraan_bulan_next = $perkiraan_bulan;
-                                            }
-                                            if (isset($error)) {
-                                                $error_next = $error;
-                                            }
-                                            if (isset($abs_err)) {
-                                                $abs_err_next = $abs_err;
-                                            }
-                                            if (isset($abs_err2)) {
-                                                $abs_err_next2 = $abs_err;
-                                            }
-                                            if (isset($abs_err_percent)) {
-                                                $abs_err_percent_next = $abs_err_percent;
-                                            }
+                                            // if (isset($perkiraan_bulan)) {
+                                            //     $perkiraan_bulan_next = $perkiraan_bulan;
+                                            // }
+                                            // if (isset($error)) {
+                                            //     $error_next = $error;
+                                            // }
+                                            // if (isset($abs_err)) {
+                                            //     $abs_err_next = $abs_err;
+                                            // }
+                                            // if (isset($abs_err2)) {
+                                            //     $abs_err_next2 = $abs_err;
+                                            // }
+                                            // if (isset($abs_err_percent)) {
+                                            //     $abs_err_percent_next = $abs_err_percent;
+                                            // }
 
 
                                             //rumus single exponential smoothing
