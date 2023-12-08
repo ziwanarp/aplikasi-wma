@@ -24,8 +24,15 @@ if (isset($save)) {
 
         mysqli_query($kns,"UPDATE tb_stok_produksi SET stock ='$stok[0]' WHERE nama_barang = '$nama_barang' AND id_barang = '$id_barang'");
     } else {
-        $kode_barang = "PRD_".rand(1, 9999);
-        $smp = mysqli_query($kns, "insert into tb_produksi values(null,'$tgl_produksi','$id_barang','$kode_barang','$nama_barang','$isi','$banyaknya','$jumlah')");
+        $data = mysqli_query($kns,"SELECT * FROM tb_produksi ORDER BY id DESC");
+        $data = mysqli_fetch_array($data);
+        if($data == null){
+            $kode_barang = 'PRD_1';
+        }else {
+            $kode_barang = explode('_',$data[3]);
+            $kode_barang = "PRD_".($kode_barang[1]+1);
+        }
+        $smp = mysqli_query($kns, "INSERT INTO tb_produksi VALUES(null,'$tgl_produksi','$id_barang','$kode_barang','$nama_barang',0,0,'$jumlah', $harga_jual)");
 
         // insert tabel stok produksi
         mysqli_query($kns,"INSERT INTO tb_stok_produksi VALUES (null,'$kode_barang','$id_barang','$nama_barang','$jumlah')");
@@ -34,13 +41,13 @@ if (isset($save)) {
     
 
     if ($smp) {
-        $penjualan2 = mysqli_query($kns, "select
+        $penjualan2 = mysqli_query($kns, "SELECT
                                                      tb_stok.id_stok as idstok, 
                                                      tb_barang.id_barang as id, 
                                                      
                                                      tb_stok.stok_sekarang as stok
-                                                     from tb_stok
-                                                     inner join tb_barang on tb_stok.id_barang = tb_barang.id_barang");
+                                                     FROM tb_stok
+                                                     INNER JOIN tb_barang on tb_stok.id_barang = tb_barang.id_barang");
         while ($penjualan3 = mysqli_fetch_array($penjualan2)) {
             if ($penjualan3['id'] == $id_barang) {
                 $stok = $penjualan3['stok'];
@@ -203,7 +210,7 @@ if (isset($save)) {
                                         <div class="col-md-3">
                                             <select class="form-control" name="id_barang" style="width:250px;">
                                                 <?php
-                                                $x = mysqli_query($kns, "SELECT nama_supplier, nama_barang, id_barang FROM tb_barang INNER JOIN tb_supplier ON tb_barang.id_supplier = tb_supplier.id_supplier");
+                                                $x = mysqli_query($kns, "SELECT nama_supplier, nama_barang, id_barang, status_pesanan FROM tb_barang INNER JOIN tb_supplier ON tb_barang.id_supplier = tb_supplier.id_supplier WHERE status_pesanan = 1 ");
                                                 while ($y = mysqli_fetch_array($x)) {
                                                     echo "
                                                       <option value='$y[id_barang]'>$y[nama_barang] ($y[nama_supplier]) </option>";
@@ -219,7 +226,7 @@ if (isset($save)) {
                                             <input type="text" class="form-control form-control-line" name="nama_barang" id="nama_barang" onkeyup='check()'>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-4">Isi</label>
                                         <div class="col-md-3">
                                             <input type="number" step="0.01" class="form-control form-control-line" name="isi" id="isi" onkeyup='check()'>
@@ -230,11 +237,17 @@ if (isset($save)) {
                                         <div class="col-md-3">
                                             <input type="number" class="form-control form-control-line" name="banyaknya" id="banyaknya" onkeyup='check()'>
                                         </div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label class="col-md-4">Jumlah <small>(Kilogram)</small> </label>
+                                        <div class="col-md-3">
+                                            <input type="number" class="form-control form-control-line" name="jumlah" id="jumlah" >
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4">Jumlah</label>
+                                        <label class="col-md-4">Harga Jual</label>
                                         <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-line" name="jumlah" id="jumlah" readonly>
+                                            <input type="number" class="form-control form-control-line" name="harga_jual" id="harga_jual" >
                                         </div>
                                     </div>
                                     <div class="form-group">

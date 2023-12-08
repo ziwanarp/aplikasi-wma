@@ -33,7 +33,7 @@ if (isset($save)) {
 
     } else {
         $id_barang = $kode_barang . '_' . rand(100, 999);
-        $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan','$isi','$banyaknya','$jumlah','$supplier','2')");
+        $smp = mysqli_query($kns, "INSERT INTO tb_barang (id_barang,kode_barang, tgl,nama_barang,satuan,isi,banyaknya,jumlah,id_supplier,status_pesanan) VALUES ('$id_barang','$kode_barang','$tanggal','$nama','$satuan',0,0,'$jumlah','$supplier','2')");
 
         if ($smp) {
             mysqli_query($kns, "INSERT INTO tb_stok VALUES('','$jumlah','$id_barang')");
@@ -236,7 +236,7 @@ if (isset($save)) {
                                             <input type="text" class="form-control form-control-line" name="satuan" required="">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-4">Isi</label>
                                         <div class="col-md-3">
                                             <input type="number" step="0.01" class="form-control form-control-line" id="isi" name="isi" required="" onkeyup='check()'>
@@ -247,11 +247,11 @@ if (isset($save)) {
                                         <div class="col-md-3">
                                             <input type="number" class="form-control form-control-line" id="banyaknya" name="banyaknya" required="" onkeyup='check()'>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label class="col-md-4">Jumlah</label>
                                         <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-line" id="jumlah" name="jumlah" readonly>
+                                            <input type="number" class="form-control form-control-line" id="jumlah" name="jumlah">
                                         </div>
                                     </div>
                                     <!-- <div class="form-group">

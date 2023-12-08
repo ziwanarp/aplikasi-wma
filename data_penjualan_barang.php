@@ -155,8 +155,7 @@ session_start();
                                                 <th>Nama Pembeli</th>
                                                 <!-- <th>Nama Barang</th> -->
                                                 <th>Kode Produksi</th>
-                                                <th>Isi</th>
-                                                <th>Banyaknya</th>
+                                            
                                                 <th>Jumlah</th>
                                                 <th>Harga Satuan</th>
                                                 <th>Total Harga</th>
@@ -182,7 +181,7 @@ session_start();
                                         tb_produksi.kode_barang AS kode_produksi_pk
                                         FROM tb_penjualan
                                         INNER JOIN tb_barang ON tb_penjualan.id_barang=tb_barang.id_barang 
-                                        INNER JOIN tb_produksi ON tb_penjualan.id_barang = tb_produksi.id_barang ORDER BY tgl_pembeli DESC") or die(mysqli_error());
+                                        INNER JOIN tb_produksi ON tb_penjualan.kode_barang_pk = tb_produksi.kode_barang ORDER BY tgl_pembeli DESC;") or die(mysqli_error());
                                         if (mysqli_num_rows($t) > 0) {
                                             while ($y = mysqli_fetch_array($t)) {
                                                 $c = $y['qty'] * $y['harga'];
@@ -193,8 +192,7 @@ session_start();
                                                           <td>$y[nama_pembeli]</td>
                                                         
                                                           <td>$y[kode_produksi] ($y[kode_produksi_pk])</td>
-                                                          <td>$y[isi]</td>
-                                                          <td>$y[banyaknya]</td>
+                                                  
                                                           <td>$y[qty]</td>
                                                           <td>Rp. " . number_format($y['harga']) . "</td>
                                                           <td>Rp. " . number_format($c) . "</td>

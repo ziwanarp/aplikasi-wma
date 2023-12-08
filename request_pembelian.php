@@ -152,8 +152,7 @@ session_start();
                                                 <th>Nama Pembeli</th>
                                                 <th>Nama Barang</th>
                                                 <th>Kode</th>
-                                                <th>Isi</th>
-                                                <th>Banyaknya</th>
+                                            
                                                 <th>Jumlah</th>
                                                 <th>Harga Satuan</th>
                                                 <th>Total Harga</th>
@@ -188,8 +187,7 @@ session_start();
                                                           <td>$y[nama_pembeli]</td>
                                                           <td>$y[nama_barang]</td>
                                                           <td>$y[kode_barang]</td>
-                                                          <td>$y[isi]</td>
-                                                          <td>$y[banyaknya]</td>
+                                                        
                                                           <td>$y[qty]</td>
                                                           <td>Rp. " . number_format($y['harga']) . "</td>
                                                           <td>Rp. " . number_format($c) . "</td>

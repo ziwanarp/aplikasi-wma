@@ -7,9 +7,14 @@ include "kns.php";
 extract($_POST);
 if (isset($save)) {
 
+    $data = mysqli_query($kns,"SELECT * FROM tb_produksi WHERE id = '$id'");
+    $row = mysqli_fetch_row($data);
+    $id_barang = $row[2];
+    $kode_barang_pk = $row[3];
+
     $kode_barang = explode("_", $id_barang);
 
-    $smp = mysqli_query($kns, "insert into tb_penjualan values(null,'$tgl','$nama_pembeli','$id_barang','$kode_barang[0]','$isi','$banyaknya','$qty','$harga','2')");
+    $smp = mysqli_query($kns, "INSERT INTO tb_penjualan VALUES(null,'$tgl','$nama_pembeli','$id_barang','$kode_barang[0]',0,0,'$qty','$harga','2','$kode_barang_pk')");
     if ($smp) {
         $penjualan2 = mysqli_query($kns, "SELECT * FROM tb_stok_produksi");
         while ($penjualan3 = mysqli_fetch_array($penjualan2)) {
@@ -176,19 +181,19 @@ if (isset($save)) {
                                     <div class="form-group">
                                         <label class="col-md-4">Kode Barang</label>
                                         <div class="col-md-3">
-                                            <select class="form-control" name="id_barang" style="width:250px;">
+                                            <select class="form-control" name="id" id="id_barang" onclick="sendAjaxRequest()" style="width:250px;">
                                                 <?php
                                                 $x = mysqli_query($kns, "select * from tb_produksi");
                                                 while ($y = mysqli_fetch_array($x)) {
                                                     echo "
-                                                    <option value='$y[id_barang]'>$y[nama_barang]</option>";
+                                                    <option value='$y[id]'>$y[nama_barang]</option>";
                                                 }
                                                 ?>
 
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-4">Isi</label>
                                         <div class="col-md-3">
                                             <input type="number" step="0.01" class="form-control form-control-line" name="isi" id="isi" onkeyup='check()'>
@@ -199,17 +204,17 @@ if (isset($save)) {
                                         <div class="col-md-3">
                                             <input type="number" class="form-control form-control-line" name="banyaknya" id="banyaknya" onkeyup='check()'>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
-                                        <label class="col-md-4">Jumlah</label>
+                                        <label class="col-md-4">Jumlah <small>( Kilogram )</small></label>
                                         <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-line" name="qty" id="qty" readonly>
+                                            <input type="number" class="form-control form-control-line" name="qty" id="qty">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4">Harga Satuan</label>
                                         <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-line" name="harga" id="harga">
+                                            <input type="number" class="form-control form-control-line" name="harga" id="harga" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -255,11 +260,22 @@ if (isset($save)) {
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script>
-        var check = function() {
-            var isi = document.getElementById('isi').value
-            var banyaknya = document.getElementById('banyaknya').value;
-            document.getElementById('qty').value = isi * banyaknya;
-        }
+            function sendAjaxRequest() {
+        var id_barang = document.getElementById('id_barang').value;
+        console.log(id_barang);
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'ajax.php?id=' + id_barang, true);
+
+        xhr.onload = function() {
+            if (xhr.status == 200) {
+                document.getElementById('harga').value = xhr.responseText;
+                console.log(xhr.responseText);
+            } else {
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.send();
+    }
     </script>
     <script src="assets/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
