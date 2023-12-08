@@ -186,7 +186,7 @@ if (isset($save)) {
                                                 $x = mysqli_query($kns, "select * from tb_produksi");
                                                 while ($y = mysqli_fetch_array($x)) {
                                                     echo "
-                                                    <option value='$y[id]'>$y[nama_barang]</option>";
+                                                    <option value='$y[id]'>$y[nama_barang] ($y[kode_barang])</option>";
                                                 }
                                                 ?>
 
